@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+    <head>
+        <meta charset="utf-8">
+        <title>Produits - DN Store🛒-</title>
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="dn.js"></script>
+    </head>
+    <body>
+      <header>
+        <div class="top-header">
+          <!-- GAUCHE : logo -->
+          <div class="div1">
+            <a href="index.html"><img src="imgs/Logo-dav.png" alt="Logo" id="logo-principale"></a>
+            <a href="index.html" class="logo">DN Store</a>
+          </div>
+      
+          <!-- DROITE : actions -->
+          <div class="header-action">
+            <a href="produits.html">Produits</a>
+            <button id="btn-search-open" aria-label="Rechercher">🔍</button>
+            <div style="display: flex; gap: 15px;">
+              <a href="wishlist.html" style="text-decoration: none;">🤍 <span id="wishlist-count">0</span></a>
+              <a href="panier.html">🛒 <span id="panier-count">0.00</span> - <span id="panier-total">0 $</span></a>
+            </div>
+          </div>
+        </div>
+      
+        <!-- OVERLAY RECHERCHE - CACHÉ AU DÉPART -->
+        <div id="search-overlay">
+          <div class="search-bar">
+            <form id="form-recherche">
+              <input type="search" id="site-search" name="q" placeholder="Rechercher un polo, jeans, Rolex...">
+              <button type="submit">&#128269;</button>
+            </form>
+            <div id="resultats-live"></div>
+          </div>
+          <button id="btn-search-close">✕</button>
+        </div>
+      
+        <!-- le bandeau d'annonce commercial -->
+        <div class="annonce"> 🚀 Livraison standard offerte dès 10$ d'achat ! <a href="#promotion">Profitez-en</a> </div>
+        
+        <div class="general1-p">
+          <div id="section1-p">
+              <p class="titre-page">PRODUITS 🛒</p>
+              <p>Bienvenues dans l'onglet de touts les produits✨.
+                  <br> vous cherchez un produits nos affichez dans nos grilles ?
+                  <br> Ne vous en faites pas envoyer juste le produits rechercher à l'assistante IA 🤖 il vous donnera le donnée du produits 
+              </p>
+          </div>
+
+          <nav class="nav-class1">
+              <ul class="nav-links">
+                  <li class="menu-fem"><a href="produits.html?categorie=femme">Femme</a></li>
+                  <li class="menu-hom"><a href="produits.html?categorie=homme">Homme</a></li>
+                  <li class="menu-enf"><a href="produits.html?categorie=enfant">Enfant</a></li>
+                  <li class="menu-sta"><a href="produits.html?categorie=standard">standard</a></li>
+              </ul>
+          </nav>
+        </div>
+      </header>
+
+        <main>
+            <section class="presentation" id="nouveaute">
+                <!--section presentation-->
+                <span class="badges">NOUVEAUTE DE LA SEMAINE 🔥</span>
+                <h1>Nos  produits disponible de la semaine</h1>
+                <p>Découvrez tous les produits disponibles chez <strong>DN Store</strong></p>
+            </section>
+
+            <!--Catégorie polos-->
+            <section id="polos" class="products-category">
+              <div class="category-head">
+                <div class="category-head-top">
+                  <div>
+                    <span class="cat-kicker">COLLECTION HOMME • ÉDITION 2026</span>
+                    <h2>NOS POLOS</h2>
+                  </div>
+                  <span class="badge-taille">Tailles S - M - L - XL</span>
+                </div>
+                <p class="category-desc">Des polos en coton premium, coupe réguliECHE & PLUIEre et finitions soignées. Idéal pour le quotidien, le bureau ou vos sorties à Butembo. Choisissez votre marque, couleur et taille.</p>
+              </div>
+                <div class="products-grid">
+                    <article class="product-cart" id="polo-de-marque" data-categorie="homme">
+                        <img src="imgs/polo1.jpg" alt="polos de marque">
+                        <div class="product-info">
+                            <h3>POLO de marque</h3>
+                            <p>Un polo en fil premium</p>
+                        </div>
+                        <div class="product-price">
+                            <span class="ancien-prix">12 $ / 28 000 CDF</span>
+                            <span class="nouveau-prix">8 $ / 18 400 CDF</span>
+                          </div>
+                        <button class="add-to-cart" data-id="polo-de-marque" data-nom="POLO de marque" data-prix="8" data-img="imgs/polo1.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=polo-de-marque" id="polo-de-marque">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="polo-de-marque" data-nom="Polo de marque" data-prix="8" data-img="imgs/polo1.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                        
+                    </article>
+
+                    <article class="product-cart" id="polo-1977" data-categorie="femme">
+                        <img src="imgs/polo2.jpg" alt="polos femme">
+                        <div class="product-info">
+                            <h3>Polo 1977</h3>
+                            <p class="desc">Un polo parfais d'un tissus premium</p>
+                        </div>
+                        <div class="product-price">
+                            <span class="ancien-prix">12 $ / 28 000 CDF</span>
+                            <span class="nouveau-prix">8 $ / 18 400 CDF</span>
+                          </div>
+                        <button class="add-to-cart" data-id="polo-1977" data-nom="polo 1977" data-prix="8" data-img="imgs/polo2.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=polo-1977" id="polo-1977">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="polo-1977" data-nom="polo 1977" data-prix="8" data-img="imgs/polo2.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+ 
+
+                    <article class="product-cart" id="polo-nike" data-categorie="homme">
+                        <img src="imgs/polo-lv.jpeg" alt="polos-nike">
+                        <div class="product-info">
+                            <h3>Polo Nike</h3>
+                            <p class="desc">polo en fil prremium</p>
+                        </div>
+                        <div class="product-price">
+                            <span class="ancien-prix">12 $ / 28 000 CDF</span>
+                            <span class="nouveau-prix">8 $ / 18 400 CDF</span>
+                          </div>
+                        <button class="add-to-cart" data-id="polo-nike" data-nom="polo nike" data-prix="8" data-img="imgs/polo-lv.jpeg">Ajouter au panier</button>
+                        <a href="produit.html?id=polo-nike" id="polo-nike">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="polo-nike" data-nom="polo nike" data-prix="8" data-img="imgs/polo-lv.jpeg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+                </div>
+            </section>
+
+            <!--Catégory tricots-->
+            <section id="tricots" class="products-category">
+              <div class="category-head">
+                <div class="category-head-top">
+                  <div><span class="cat-kicker">MAILLE PREMIUM • DOUCEUR GARANTIE</span><h2>NOS TRICOTS</h2></div>
+                  <span class="badge-taille">Tailles unique & standard</span>
+                </div>
+                <p class="category-desc">Mailles fines et epaisses, col rond ou col roulé. La chaleur sans le poids, parfait pour vos soirées fraîches et vos looks street élégant.</p>
+              </div>
+                <div class="products-grid">
+                    <article class="product-cart" id="tricot-sorf" data-categorie="homme">
+                        <img src="imgs/tricot1.jpg" alt="tricot simple">
+                        <h3>Tricot-Sorf</h3>
+                        <p>tricots Sorf en fil, accompagne votre style en cravate</p>
+                        <h3> 12 $ / 27 000 CDF</h3>
+                        <button class="add-to-cart" data-id="tricot-sorf" data-nom="tricot-sorf" data-prix="12" data-img="imgs/tricot1.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=tricot-sorf" id="tricot-sorf">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="tricot-sorf" data-nom="tricot-sorf" data-prix="12" data-img="imgs/tricot1.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+
+                    <article class="product-cart" id="tricots-great" data-categorie="enfant">
+                        <img src="imgs/tricot2.jpg" alt="tricot great">
+                        <h3>Tricot-Greats</h3>
+                        <p>tricots Greats en tissus, accompagne votre style peu importe l'atmosphECHE & PLUIEre</p>
+                        <h3> 15 $ / 35 000 CDF</h3>
+                        <button class="add-to-cart" data-id="tricots-great" data-nom="tricots-great" data-prix="15" data-img="imgs/tricot2.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=tricots-great" id="tricots-great">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="tricots-great" data-nom="tricots-great" data-prix="15" data-img="imgs/tricot2.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+                    
+                    <article class="product-cart" id="tricot-fil" data-categorie="homme">
+                        <img src="imgs/tricot-but.jpg" alt="tricot en fil">
+                        <h3>Tricot en fils</h3>
+                        <p>tricots en fil, accompagne votre style en cravate</p>
+                        <h3> 12 $ / 27 000 CDF</h3>
+                        <button class="add-to-cart" data-id="tricot-fil" data-nom="tricot en fil" data-prix="12" data-img="imgs/tricot-but.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=tricot-fil" id="tricot-fil">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="tricot-fil" data-nom="tricot en fil" data-prix="12" data-img="imgs/tricot-but.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+
+                    <article class="product-cart" id="tricots-brad" data-categorie="femme">
+                        <img src="imgs/femme.jpeg" alt="tricot simple">
+                        <h3>Tricots-Brad</h3>
+                        <p>tricots Brad en tissus lourd, accompagne n'importe quel style</p>
+                        <h3> 15 $ / 35 000 CDF</h3>
+                        <button class="add-to-cart" data-id="tricots-brad" data-nom="tricots-brad" data-prix="15" data-img="imgs/femme.jpeg">Ajouter au panier</button>
+                        <a href="produit.html?id=tricots-brad" id="tricots-brad">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="tricots-brad" data-nom="tricots-brad" data-prix="15" data-img="imgs/femme.jpeg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+                    <article class="product-cart" id="tricot-LV" data-categorie="homme">
+                        <img src="imgs/trlv.jpeg" alt="tricot simple">
+                        <h3>Tricot LV</h3>
+                        <p>tricots LV en fil, de tre bonne qualité</p>
+                        <h3> 13 $ / 29 000 CDF</h3>
+                        <button class="add-to-cart" data-id="tricot-LV" data-nom="tricot-LV" data-prix="12" data-img="imgs/trlv.jpeg">Ajouter au panier</button>
+                        <a href="produit.html?id=tricot-LV" id="tricot-LV">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="tricot-LV" data-nom="tricot-LV" data-prix="12" data-img="imgs/trlv.jpeg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+                </div>
+            </section>
+
+            <!--Category hauts-->
+            <section id="hauts" class="products-category"> 
+              <div class="category-head">
+                <div class="category-head-top">
+                  <div><span class="cat-kicker">TOPS • ESSENTIELS DU QUOTIDIEN</span><h2>NOS HAUTS</h2></div>
+                  <span class="badge-taille">S - M - L - XL</span>
+                </div>
+                <p class="category-desc">L'essentiel de vos dressing : T-shirt premium, chemises soignées et polos iconique. Des basiques qui relECHE & PLUIEvent n'importe quelle tenue.</p>
+              </div>
+  <div class="products-grid"> 
+
+    <article class="product-cart" id="jeans-marque" data-categorie="homme"> 
+      <img src="imgs/chem1.jpg" alt="chemise jean"> 
+      <h3>Jeans-marque</h3> 
+      <p>Chemises jeans tissus jean, exelent pour touts habillement</p> 
+      <h3>12 $ / 27 000 CDF</h3> 
+      <button class="add-to-cart" data-id="jeans-marque" data-nom="Jeans-marque" data-prix="12" data-img="imgs/chem1.jpg">Ajouter au panier</button> 
+      <a href="produit.html?id=jeans-marque" id="jeans-marque">Voir les détails</a> 
+      <button type="button" class="btn-heart" data-wish-id="jeans-marque" data-nom="Jeans-marque" data-prix="12" data-img="imgs/chem1.jpg">
+        <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+        <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+      </button>
+    </article> 
+
+    <article class="product-cart" id="canava" data-categorie="femme"> 
+      <img src="imgs/chem2.jpg" alt="chemise Canava"> 
+      <h3>Canava</h3> 
+      <p>Caneva tissus rafia, assure votre résponsabilités en un regard</p> 
+      <h3>12 $ / 27 000 CDF</h3> 
+        <button class="add-to-cart" data-id="canava" data-nom="Canava" data-prix="12" data-img="imgs/chem2.jpg">Ajouter au panier</button> 
+        <a href="produit.html?id=canava" id="canava">Voir les détails</a> 
+        <button type="button" class="btn-heart" data-wish-id="canava" data-nom="Canava" data-prix="12" data-img="imgs/chem2.jpg">
+          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+        </button>
+    </article> 
+
+    <article class="product-cart" id="g-star-marque" data-categorie="homme"> 
+      <img src="imgs/chem3.jpg" alt="chemise G-star"> 
+      <h3>G-star-marque</h3> 
+      <p>chemise en tissus lourd, accompagne n'importe quel style surtout quand ça va avec les chaussures</p> 
+      <h3>10 $ / 23 000 CDF</h3> 
+        <button class="add-to-cart" data-id="g-star-marque" data-nom="G-star-marque" data-prix="10" data-img="imgs/chem3.jpg">Ajouter au panier</button> 
+        <a href="produit.html?id=g-star-marque" id="g-star-marque">Voir les détails</a> 
+        <button type="button" class="btn-heart" data-wish-id="g-star-marque" data-nom="G-star-marque" data-prix="10" data-img="imgs/chem3.jpg">
+          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+        </button>
+    </article> 
+
+  </div> 
+</section>
+
+            <section id="bas" class="products-category">
+              <div class="category-head">
+                <div class="category-head-top">
+                  <div><span class="cat-kicker">BOTTONS • COUPE PARFAITE</span><h2>NOS BAS</h2></div>
+                  <span class="badge-taille">28 à 42 • Slim & Regular</span>
+                </div>
+                <p class="category-desc">Jeans brut, chinos et pantalons cargo. Coupe ajoutée, confort toute la journée et finitions solides pour un style qui dure.</p>
+              </div>
+                <div class="products-grid">
+                    <article class="product-cart" id="jeans-grec" data-categorie="homme">
+                        <img src="imgs/pat1.jpg" alt="jeans grec">
+                        <h3>Jeans grec</h3>
+                        <p>decouvrez la qualité et la frechêur de nos pantalon</p>
+                        <h3> 12 $ / 27 000 CDF</h3>
+                        <button data-id="jeans-grec" class="add-to-cart" data-nom="Jeans grec" data-prix="12" data-img="imgs/pat1.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=jeans-grec" id="jeans-grec">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="jeans-grec data-nom="Jeans grec" data-prix="12" data-img="imgs/pat1.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+
+                    <article class="product-cart" id="g-star" data-categorie="enfant">
+                        <img src="imgs/chem12.jpeg" alt="G-star">
+                        <h3>G-star</h3>
+                        <p>Jeans proprement dit avec un tissus éxceptionnel</p>
+                        <h3> 15 $ / 35 000 CDF</h3>
+                        <button data-id="g-star" class="add-to-cart" data-nom="G-star" data-prix="15" data-img="imgs/chem12.jpeg">Ajouter au panier</button>
+                        <a href="produit.html?id=g-star" id="g-star">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="g-star" data-nom="G-star" data-prix="15" data-img="imgs/chem12.jpeg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+
+                    <article class="product-cart" id="ralf" data-categorie="homme">
+                        <img src="imgs/giesta.jpg" alt="chemise G-star">
+                        <h3>Ralf</h3>
+                        <p>Votre habillement impose le respect avec nos pantallons</p>
+                        <h3> 15 $ / 35 000 CDF</h3>
+                        <button class="add-to-cart" data-id="ralf" data-nom="Ralf" data-prix="10" data-img="imgs/giesta.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=ralf" id="ralf">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="ralf" data-nom="Ralf" data-prix="10" data-img="imgs/giesta.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+                </div>
+            </section>
+
+            <section id="costumes" class="products-category">
+              <div class="category-head">
+                <div class="category-head-top">
+                  <div><span class="cat-kicker">OUTERWEAR • SAISON SECHE & PLUIE</span><h2>NOS VESTE</h2></div>
+                  <span class="badge-taille">Tailles S - M - XL - XXL</span>
+                </div>
+                <p class="category-desc">Coupes modernes, tissus résistant et doublures confortables. Bomber, denim ou blazer décontracté pour affronter Butembo avec style.</p>
+              </div>
+                <div class="products-grid">
+                    <article class="product-cart" id="veste-complet" data-categorie="homme">
+                        <img src="imgs/veste1.webp" alt="Veste complet">
+                        <h3>Veste complet</h3>
+                        <p>decouvrez la qualité et la frechêur de nos costumes accombagner des sacs</p>
+                        <h3> 35 $ / 80 500 CDF</h3>
+                        <button class="add-to-cart" data-id="veste-complet" data-nom="Veste complet" data-prix="35" data-img="imgs/veste1.webp">Ajouter au panier</button>
+                        <a href="produit.html?id=veste-complet" id="veste-complet">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="veste-complet" data-nom="Veste complet" data-prix="35" data-img="imgs/veste1.webp">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+
+                    <article class="product-cart" id="quatar" data-categorie="homme">
+                        <img src="imgs/silhouettes3.jpg" alt="G-star">
+                        <h3>QATAR</h3>
+                        <p>Completer votre habiellent avec une veste Quatar pour une bonne finnitions</p>
+                        <h3> 15 $ / 35 000 CDF</h3>
+                        <button class="add-to-cart" data-id="quatar" data-nom="Quatar" data-prix="15" data-img="imgs/silhouettes3.jpg">Ajouter au panier</button>
+                        <a href="produit.html?id=quatar" id="quatar">Voir les détails</a>
+                        <button type="button" class="btn-heart" data-wish-id="quatar" data-nom="Quatar" data-prix="15" data-img="imgs/silhouettes3.jpg">
+                          <svg class="heart-outline" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#333" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                          <svg class="heart-filled" viewBox="0 0 24 24" width="18" height="18" fill="#e63946" style="display:none"><path d="M12 21s-6.5-4.35-9-8.5A5.5 5.5 0 0 1 12 7a5.5 5.5 0 0 1 9 5.5c-2.5 4.15-9 8.5-9 8.5z"/></svg>
+                        </button>
+                    </article>
+
+                </div>
+            </section>
+
+            <section id="chaussures" class="products-category">
+              <div class="category-head">
+                <div class="category-head-top">
+                  <div><span class="cat-kicker">FOOTWEAR • OPEN SHOWS</span><h2>NOS CHAUSSURES</h2></div>
+                  <span class="badge-taille">Pointures 38 - 45</span>
+                </div>
+                <p class="category-desc">Confort & durabilité</p>
+              </div>
+                <div class="products-grid">
+                    <article class="product-cart" id="chaussures-fermer"  data-categorie="standard">
+                        <img src="imgs/chaussures1.jpg" alt="Chaussures fermer">
+                        <h3>Chaussures fermer</h3>
+                        <p>Sneakers, mocassins et derbies. Semelle confort, cuir et toiles de qualité  pour marcher, travailler et sortir sans compromis.</p>
+                        <h3> DE 10$ à 35$</h3>
+                        <a href="produit.html?id=chaussures-fermer" id="chaussures-fermer">Voir les chaussures fermer</a>
+                    </article>
+
+                    <article class="product-cart" id="sandals" data-categorie="standard">
+                        <img src="imgs/sandal1.jpg" alt="Sandals">
+                        <h3>Sandals</h3>
+                        <p>Respirantes, légères et robustes: Pour la maison, la ville ou un promenade. Style décontracté avec maintien parfait.</p>
+                        <h3>DE 10$ à 35$</h3>
+                        <a href="produit.html?id=sandals" id="sandals">Voir les sandals</a>
+                    </article>
+
+                </div>
+            </section>
+
+            <section id="accessoires" class="products-category">
+              <div class="category-head">
+                <div class="category-head-top">
+                  <div><span class="cat-kicker">ACCESSOIRES • LUXE ADORABLE</span><h2>ACCESSOIRES</h2></div>
+                  <span class="badge-taille">Cravates • Montres • Ceintures</span>
+                </div>
+                <p class="category-desc">Les detailles fait l'homme. Cravates soyeuses, montre style Rolex - Hublot, ceintures cuir et portefeuilles, Pour passer de simple à distingué.</p>
+              </div>
+                <div class="products-grid">
+                    <article class="product-cart" id="chapeau" data-categorie="standard">
+                        <img src="imgs/chap1.jpg" alt="accessoires1">
+                        <h3>Nos chapeau</h3>
+                        <p>Casquets bobs et chapeaux street. La touche final qui protège du soleil et signe de votre look en une seconde.</p>
+                        <a href="produit.html?id=chapeau" id="chapeau">Voir les détails</a>
+                    </article>
+
+                    <article class="product-cart" id="bracelet-chenette" data-categorie="standard">
+                        <img src="imgs/bracelet1.jpg" alt="accessoires2">
+                        <h3>Bracelet, Chenettes</h3>
+                        <p>Completez votre habiellement avec un des accessoires pour finnaliser votre style</p>
+                        <a href="produit.html?id=bracelet-chenette" id="bracelet-chenette">Voir les détails</a>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <div class="avant-footer">
+            <section class="premier-commande">
+                <p><strong>Pour votre premier commande (achat)</strong></p>
+                <ul>
+                    <li>✅-10% sur votre premier commande</li>
+                    <li>📦Amballage et Livraison special</li>
+                </ul>
+            </section>
+        
+         <nav>
+            <div class="table">
+                <h4>Lien rapides</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="produits.html">Produits</a></li>
+                    <li><a href="plan-du-site.html">Plan du site</a></li>
+                </ul>
+            </div>
+                <div class="socials-avant">
+                    <h4>suiver nous sur :</h4>
+                    <div class="icons-avant">
+                        <a href="https://wa.me/243851961132" target="_blank"><img src="imgs/wat.png" alt="Compte watsap" width="50" height="50"><span>Watsap</span></a>
+                        <a href="https://www.facebook.com/share/1LqJcCoWGK/" target="_blank"><img src="imgs/fac.png" alt="Compte facebook" width="50" height="50"><span>Facebook</span></a>
+                        <a href="https://instagram.com/KYASWADAVID" target="_blank"><img src="imgs/insta.png" alt="Page instagram" width="50" height="50"><span>Instagram</span></a>
+                        <a href="https://www.tiktok.com/@f.kavisky" target="_blank"><img src="imgs/tik.png" alt="Compte tiktok" width="50" height="50"><span>Tiktok</span></a>
+                    </div>
+               </div>
+         </nav>
+        </div>
+
+            
+        <footer>
+            <section>
+                <h2>DN Store🛒</h2>
+                <p>La boutique qui vous habille sans vous déplacer.</p>
+            </section>
+
+            <section>
+                    <h3>Mention légales</h3>
+                    <ul>
+                        <li>
+                            <a href="mentions-legals.html">Mentions légales</a>
+                        </li>
+                        <li>
+                            <a href="cgv.html">Condition générales de vente</a>
+                        </li>
+                        <li>
+                            <a href="plan-du-site.html">Plan du site</a>
+                        </li>
+                    </ul>
+                    <p>📍 Marché central, BUTEMBO🛍</p>
+            </section>
+                <p id="copiright">© 2026 DN Store. Tout droits réservés.</p>
+        </footer>
+
+        <!-- BOTTOM NAV FIXE PRO DN STORE -->
+<div class="bottom-nav show" id="bottomNav">
+  <a href="index.html" class="nav-item"><span>🏠</span>ACCUEIL</a>
+  <a href="produits.html" class="nav-item"><span>🛍</span>PRODUITS <b id="bottom-produits-badge" class="badge-new" style="display:none;">0</b></a>
+  <a href="panier.html" class="nav-item"><span>🛒</span>PANIER <b id="nombre-articles">0</b></a>
+  <a href="profil.html" class="nav-item"><span>👤</span>PROFIL</a>
+</div>
+      
+      <script src="script.js"></script>
+      <script>
+        // RECHERCHE DN STORE - VERSION CLEAN
+const tousLesProduits = [
+  { nom: "Jeans", q: "jeans" }, { nom: "Polo Nike", q: "polo nike" },
+  { nom: "Polo 1977", q: "polo 1977" }, { nom: "Polo de marque", q: "polo de marque" },
+  { nom: "Chemise", q: "chemise" }, { nom: "T-shirt", q: "tshirt" }
+];
+
+const input = document.getElementById('site-search');
+const form = document.getElementById('form-recherche');
+const liveBox = document.getElementById('resultats-live');
+
+if(input){
+  input.addEventListener('input', () => {
+    let q = input.value.toLowerCase().trim();
+    liveBox.innerHTML = '';
+    if(q.length < 2) return;
+    tousLesProduits.filter(p=>p.nom.toLowerCase().includes(q))
+      .forEach(p=>{
+        liveBox.innerHTML += `<a href="produits.html?q=${encodeURIComponent(p.q)}" class="live-item">${p.nom}</a>`;
+      });
+  });
+}
+
+if(form){
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    let q = input.value.trim();
+    if(q) window.location.href = `produits.html?q=${encodeURIComponent(q)}`;
+  });
+}
+
+// LOGIQUE SUR produits.html
+if(window.location.pathname.includes('produits.html')){
+  const params = new URLSearchParams(window.location.search);
+  let q = params.get('q');
+  if(q){
+    let qLower = q.toLowerCase().trim();
+    document.body.classList.add('en-recherche');
+
+    // 1. Crée le header de résultat si pas là
+    let zone = document.querySelector('.general1-p') || document.body;
+    if(!document.getElementById('resultat-header')){
+      let h = document.createElement('div');
+      h.id = 'resultat-header';
+      h.textContent = `RÉSULTATS POUR "${q}"`;
+      zone.prepend(h);
+    }
+
+    // 2. Filtre les produits
+    let trouve = 0;
+    document.querySelectorAll('.product-cart').forEach(card=>{
+      let btn = card.querySelector('.add-to-cart');
+      let nom = (btn?.dataset?.nom || card.textContent || "").toLowerCase();
+      if(nom.includes(qLower)){ card.style.display=''; trouve++; }
+      else { card.style.display='none'; }
+    });
+
+    // 3. Cache les sections vides
+    document.querySelectorAll('.products-category, section, .product-category').forEach(sec=>{
+      let cartes = sec.querySelectorAll('.product-cart');
+      if(cartes.length===0) return;
+      let visibles = [...cartes].filter(c=>c.style.display!=='none').length;
+      sec.style.display = visibles===0 ? 'none' : '';
+    });
+
+    if(trouve===0){
+      document.getElementById('resultat-header').textContent = `Aucun résultat pour "${q}"`;
+    }
+
+    if(input) input.value = q;
+  }
+}
+
+// --- LOUPE HEADER LOGIQUE ---
+const overlay = document.getElementById('search-overlay');
+const btnOpen = document.getElementById('btn-search-open');
+const btnClose = document.getElementById('btn-search-close');
+
+if(btnOpen && overlay){
+  btnOpen.addEventListener('click', ()=>{
+    overlay.classList.add('active');
+    setTimeout(()=> document.getElementById('site-search')?.focus(), 100);
+  });
+  btnClose.addEventListener('click', ()=>{
+    overlay.classList.remove('active');
+  });
+  // Ferme avec Echap
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape') overlay.classList.remove('active');
+  });
+}
+
+// --- FILTRE PAR CATEGORIE : FEMME / HOMME / ENFANT / STANDARD ---
+(function(){
+  if(!window.location.pathname.includes('produits.html')) return;
+
+  const params = new URLSearchParams(window.location.search);
+  let cat = params.get('categorie');
+  if(!cat) return;
+
+  cat = cat.toLowerCase().trim(); // femme, homme, enfant, standard ou standar
+  if(cat === 'standar') cat = 'standard'; // corrige ta faute de frappe nav
+
+  // Messages d'accueil pro par catégorie
+  const messages = {
+    femme: "COLLECTION FEMME • Élégance, confort et tendance. Des pièces choisies pour révéler votre style au quotidien à Goma.",
+    homme: "COLLECTION HOMME • Style affirmé, coupes modernes et finitions premium. L'essentiel pour un homme distingué.",
+    enfant: "COLLECTION ENFANT • Confort, couleur et résistance. Des tenues qui suivent vos enfants partout.",
+    standard: "COLLECTION STANDARD • Unisexe, intemporel et accessible. Les basiques qui vont à tout le monde."
+  };
+
+  // 1. On crée le header d'accueil si pas déjà créé par la recherche
+  let zone = document.querySelector('.general1-p') || document.body;
+  let headerResult = document.getElementById('resultat-header');
+  if(!headerResult){
+    headerResult = document.createElement('div');
+    headerResult.id = 'resultat-header';
+    zone.prepend(headerResult);
+  }
+  
+  headerResult.style.display = 'block';
+  headerResult.innerHTML = `
+    <span style="display:block; font-size:11px; letter-spacing:2px; opacity:0.7; margin-bottom:4px;">DN STORE • ${cat.toUpperCase()}</span>
+    ${cat.toUpperCase()} - ${messages[cat] || ''}
+  `;
+  document.body.classList.add('en-recherche');
+
+  // 2. On filtre les produits
+  let trouve = 0;
+  document.querySelectorAll('.product-cart').forEach(card=>{
+    let cardCat = (card.dataset.categorie || "").toLowerCase();
+    // standard = affiche tout si pas de catégorie, ou si card est standard
+    let match = false;
+    if(cat === 'standard'){
+      match = (cardCat === 'standard' || cardCat === '' || cardCat === 'standar');
+    } else {
+      match = (cardCat === cat);
+    }
+    
+    if(match){
+      card.style.display = '';
+      trouve++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  // 3. On cache les sections vides (Nos Polos, Nos Tricots...)
+  document.querySelectorAll('.products-category').forEach(sec=>{
+    let visibles = [...sec.querySelectorAll('.product-cart')].filter(c=>c.style.display !== 'none').length;
+    sec.style.display = visibles === 0 ? 'none' : '';
+  });
+
+  if(trouve === 0){
+    headerResult.innerHTML += `<br><span style="font-size:13px; font-weight:400; opacity:0.8; margin-top:8px; display:block;">Aucun produit pour l'instant dans cette catégorie. Revenez bientôt !</span>`;
+  }
+
+  // 4. Active le bouton dans le menu
+  document.querySelectorAll('.nav-links li').forEach(li=> li.classList.remove('active'));
+  let activeLi = document.querySelector(`.menu-${cat.substring(0,3)}`); // menu-fem, menu-hom...
+  if(activeLi) activeLi.classList.add('active');
+})();
+
+// --- SAUVEGARDE AUTO DE LA POSITION - VERSION FINALE ---
+// Plus besoin de onclick, ça sauvegarde tout seul
+
+// Quand tu cliques sur n'importe quel lien dans une carte produit
+document.querySelectorAll('.product-cart a').forEach(link => {
+  link.addEventListener('click', () => {
+    let card = link.closest('.product-cart');
+    if(card && card.id){
+      localStorage.setItem('dn_last_product', card.id);
+      console.log("Position sauvée:", card.id); // pour vérifier dans F12
+    }
+  });
+});
+
+function faireLeScroll(){
+  const lastId = localStorage.getItem('dn_last_product');
+  if(!lastId) return;
+  
+  const el = document.getElementById(lastId);
+  console.log("On cherche:", lastId, "trouvé?", el);
+  
+  if(el){
+    setTimeout(()=>{
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+      el.style.outline = '2px solid #111';
+      el.style.outlineOffset = '6px';
+      setTimeout(()=> el.style.outline = 'none', 2500);
+    }, 500);
+    localStorage.removeItem('dn_last_product');
+  }
+}
+
+// load + pageshow pour gérer le bouton retour du téléphone
+window.addEventListener('load', faireLeScroll);
+window.addEventListener('pageshow', faireLeScroll);
+      </script>
+      <div class="nav-fleches">
+        <button onclick="history.back()" title="Retour">🔙</button>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Haut">🔝</button>
+      </div>
+    </body>
+</html>

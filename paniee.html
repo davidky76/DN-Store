@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Panier - DN Luxury</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .panier-container{ max-width:600px; margin:20px auto; padding:10px; padding-bottom:120px; }
+            .panier-item{ display:flex; justify-content:space-between; align-items:center; background:#fff; border:1px solid #eee; padding:12px; border-radius:12px; margin-bottom:10px; }
+            .panier-item-info{ flex:1; }
+            .panier-item h3{ margin:0; font-size:16px; }
+            .panier-item p{ margin:4px 0; color:#555; }
+            .qte-controls{ display:flex; align-items:center; gap:8px; }
+            .qte-controls button{ width:32px; height:32px; border-radius:50%; border:1px solid #ddd; background:#f5f5f5; font-weight:bold; cursor:pointer; }
+            .btn-suppr{ background:#ff2a6d !important; color:white; border:none !important; }
+            .total-box{ background:#111; color:white; padding:20px; border-radius:15px; text-align:center; margin-top:20px; }
+            .btn-commander{ width:100%; padding:15px; background:#00c853; color:white; border:none; border-radius:30px; font-weight:bold; font-size:16px; margin-top:15px; cursor:pointer; }
+            .panier-vide{ text-align:center; padding:40px; }
+
+            .mode-choix-panier{ display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
+.mode-card{
+  display:flex; align-items:center; gap:12px;
+  background:white; border:2px solid #eee;
+  padding:8px; border-radius:14px;
+  cursor:pointer; transition:0.2s; position:relative;
+}
+.mode-card.active{
+  border-color:#00c853;
+  background:#f0faf3;
+}
+.mode-card-icon{
+  width:44px; height:44px; background:#f5f5f5;
+  border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px;
+}
+.mode-card.active .mode-card-icon{ background:white; }
+.mode-card-text{ flex:1; text-align:left; }
+.mode-card-text strong{ display:block; font-size:14px; color:#111; }
+.mode-card-text span{ font-size:11px; color:#777; }
+.mode-check{
+  width:22px; height:22px; border-radius:50%;
+  border:2px solid #ddd; display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:transparent;
+}
+.mode-card.active .mode-check{
+  background:#00c853; border-color:#00c853; color:white;
+}
+.total-ligne{
+  display:flex; justify-content:space-between;
+  font-size:18px; font-weight:bold; margin:10px 0;
+}
+.total-prix{ color:#00c853; font-size:22px; }
+.total-box{ background:#111 !important; }
+.total-box h3{ color:white; }
+        </style>
+    </head>
+    <body>
+
+        <header>
+            <div class="top-header">
+                <div class="div1"><a href="index.html"><img src="imgs/Logo-dav.png" id="logo-principale" width="40"><span class="logo">DN Luxury</span></a></div>
+                <div class="header-action"><a href="produits.html">Produits</a> <a href="panier.html">🛒 <span id="total-panier">0.00</span> $</a></div>
+            </div>
+        </header>
+
+        <main class="panier-container">
+            <h1>Mon Panier 🛒</h1>
+            <div id="liste-panier"></div>
+            <div id="total-final"></div>
+        </main>
+
+        <div class="bottom-nav show" id="bottomNav">
+            <a href="index.html">ACCUEIL</a>
+            <a href="produits.html">PRODUITS</a>
+            <a href="panier.html">PANIER <b id="nombre-articles">0</b></a>
+            <a href="profil.html">PROFIL</a>
+            <a href="cgv.html">CGV</a>
+        </div>
+
+
+    <!--Début du script-->
+        <script>
+            let panier = JSON.parse(localStorage.getItem('panier') || '[]');
+            const liste = document.getElementById('liste-panier');
+            const totalBox = document.getElementById('total-final');
+
+            function afficherPanier(){
+                liste.innerHTML = '';
+                if(panier.length === 0){
+                liste.innerHTML = '<div class="panier-vide"><h2>Ton panier est vide 😢</h2><a href="produits.html">Voir les produits</a></div>';
+                totalBox.innerHTML = '';
+                return;
+            }
+
+            let totalGeneral = 0;
+            panier.forEach((p, index) => {
+                let qte = p.qte || 1;
+                let prix = Number(p.prix) || 0;
+                let sousTotal = prix * qte;
+                totalGeneral += sousTotal;
+
+                liste.innerHTML += `
+                <div class="panier-item">
+                <div class="panier-item-info">
+                <h3>${p.nom}</h3>
+                <p>${prix} $ x ${qte} = <strong>${sousTotal} $</strong></p>
+                </div>
+                <div class="qte-controls">
+                <button onclick="changerQte(${index}, -1)">-</button>
+                <span>${qte}</span>
+                <button onclick="changerQte(${index}, 1)">+</button>
+                <button class="btn-suppr" onclick="supprimer(${index})">X</button>
+                </div>
+               </div> `;
+            });
+
+            totalBox.innerHTML = `
+<div class="total-box">
+  <h3 style="text-align:left; margin-bottom:12px;">📦 Choisis ton mode de commande</h3>
+  
+  <div class="mode-choix-panier">
+    <label class="mode-card active">
+      <input type="radio" name="modeFinal" value="direct" checked hidden>
+      <div class="mode-card-icon">🛒</div>
+      <div class="mode-card-text">
+        <strong>Direct sur le site</strong>
+        <span>Livraison rapide à domicile</span>
+      </div>
+      <div class="mode-check">✓</div>
+    </label>
+
+    <label class="mode-card">
+      <input type="radio" name="modeFinal" value="watsap" hidden>
+      <div class="mode-card-icon">💬</div>
+      <div class="mode-card-text">
+        <strong>Via WhatsApp</strong>
+        <span>On finalise ensemble</span>
+      </div>
+      <div class="mode-check">✓</div>
+    </label>
+  </div>
+
+  <div class="total-ligne">
+    <span>Total à payer</span>
+    <span class="total-prix">${totalGeneral.toFixed(2)} $</span>
+  </div>
+
+  <button class="btn-commander" onclick="commanderFinal()">Confirmer la commande</button>
+</div>
+`;
+
+// Effet de sélection verte quand on clique
+document.querySelectorAll('.mode-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    card.querySelector('input').checked = true;
+  });
+});
+  
+  // maj du badge en bas
+  let totalQte = panier.reduce((s, p) => s + (p.qte||1), 0);
+  document.getElementById('nombre-articles').textContent = totalQte;
+  document.getElementById('total-panier').textContent = totalGeneral.toFixed(2);
+  localStorage.setItem('panier', JSON.stringify(panier));
+}
+
+function changerQte(index, delta){
+  panier[index].qte = (panier[index].qte || 1) + delta;
+  if(panier[index].qte <= 0) panier.splice(index, 1);
+  afficherPanier();
+}
+function supprimer(index){
+  panier.splice(index, 1);
+  afficherPanier();
+}
+function viderPanier(){
+  if(confirm("Vider tout le panier ?")){
+    panier = [];
+    afficherPanier();
+  }
+}
+
+function commanderFinal(){
+    let mode = document.querySelector('input[name="modeFinal"]:checked').value;
+    if(mode === 'watsap') commanderWhatsApp();
+    else alert('Commande directe enregistrée !')
+}
+
+function commanderWhatsApp(){
+  let message = "Salut DN Luxury, je veux commander :%0A";
+  panier.forEach(p => {
+    message += `- ${p.nom} x${p.qte} = ${p.prix * p.qte} $%0A`;
+  });
+  let total = panier.reduce((s, p) => s + p.prix * p.qte, 0);
+  message += `%0ATotal: ${total} $`;
+  window.open(`https://wa.me/243851961132?text=${message}`, '_blank');
+}
+
+afficherPanier();
+
+// bottom nav facebook
+let lastScroll = window.scrollY;
+const nav = document.getElementById('bottomNav');
+window.addEventListener('scroll', () => {
+  let cur = window.scrollY;
+  if(cur <= 50) nav.classList.add('show');
+  else if(cur > lastScroll) nav.classList.remove('show');
+  else nav.classList.add('show');
+  lastScroll = cur;
+});
+</script>
+<div style="text-align: center; padding: 25px 18px 90px; color: #888; font-size: 12px;">
+    <p>🔒 Paiement 100% sécurisé . Livraison à Butembo & partout en RDC</p>
+    <p>DN Luxury © 2026</p>
+</div>
+</body>
+</html>

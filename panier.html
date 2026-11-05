@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panier - DN Store</title>
+<link rel="stylesheet" href="style.css">
+<script src="dn.js"></script>
+</head>
+<body>
+
+  <header class="top-header">
+    <a href="produits.html" style="font-weight:bold; text-decoration:none; color:#111;">DN SHOP</a>
+    <div style="display:flex; gap:15px;">
+      <a href="wishlist.html" style="text-decoration:none;">🤍 <span id="wishlist-count">0</span></a>
+      <a href="panier.html" style="text-decoration:none;">🛒 <span id="panier-count">0</span> - <span id="panier-total">0 $</span></a>
+    </div>
+  </header>
+
+<div class="presentation" style="padding:25px 20px;">
+  <h1>Mon Panier</h1>
+  <p id="countPanier">0 articles</p>
+</div>
+
+<div class="panier-container">
+  <div id="liste-panier"></div>
+
+  <div class="total-box">
+    <h3 style="margin-bottom:10px;">Choisis ta livraison</h3>
+    <!-- Les 2 livraisons sur une même ligne en aérien que tu voulais-->
+    <div class="livraison-box">
+      <div class="livreur active" onclick="choisirLivraison(this, 'H-delivry', 0)">
+        <strong>H-delivry</strong><br><small>Gratuit - Butembo</small>
+      </div>
+      <div class="livreur" onclick="choisirLivraison(this, 'DHL Express', 3)">
+        <strong>DHL Express</strong><br><small>3 $ - Partout en RDC</small>
+      </div>
+    </div>
+
+    <div style="margin-top:20px; border-top:1px dashed #ddd; padding-top:15px;">
+      <div style="display:flex; justify-content:space-between;"><span>Sous-total</span><span id="sousTotal">0 $</span></div>
+      <div style="display:flex; justify-content:space-between; margin-top:8px;"><span>Livraison</span><span id="fraisLivraison">0 $</span></div>
+      <div style="display:flex; justify-content:space-between; font-weight:800; font-size:20px; margin-top:12px;"><span>Total</span><span id="totalFinal">0 $</span></div>
+    </div>
+
+    <a href="commande.html" id="btnCommander" class="btn-commander" style="display:block; text-align:center; background:#000; color:#fff; padding:12px; border-radius:12px; text-decoration:none; font-weight:700; width:95%;">Commander</a>
+    <p style="text-align:center; margin-top:10px;">
+      <a href="javascript:void(0)" onclick="retourAchats()" class="btn-continuer" style="color:#4f23ff; text-decoration:none; width: 95%;">← Continuer mes achats</a>
+    </p>
+  </div>
+</div>
+
+<script> 
+// Simulation panier - En vrai ça viendra de produit.html 
+if(!localStorage.getItem('dn_panier')){
+  localStorage.setItem('dn_panier', JSON.stringify([
+    {id:"polo-bleu", nom:"Polo DN Store Bleu Royal", prix:8, sku:"DN-POLO-BLEU-M-001", qte:1, qty:1, img:"https://via.placeholder.com/100/4f23ff/fff?text=BLEU"},
+    {id:"polo-noir", nom:"Polo DN Store Noir", prix:8, sku:"DN-POLO-NOIR-L-002", qte:1, qty:1, img:"https://via.placeholder.com/100/111/fff?text=NOIR"}
+  ]));
+}
+
+let livraisonChoisi = {nom:'H-delivry', prix:0};
+
+function choisirLivraison(el, nom, prix){ 
+  document.querySelectorAll('.livreur').forEach(e=>e.classList.remove('active')); 
+  el.classList.add('active'); 
+  livraisonChoisi = {nom, prix}; 
+  calculerTotal(); 
+}
+
+function updateHeader(){
+  let panier = JSON.parse(localStorage.getItem('dn_panier')||"[]");
+  let totalQty = panier.reduce((s,p)=>s+(p.qte||p.qty||1),0);
+  let totalPrice = panier.reduce((s,p)=>s+((parseFloat(p.prix)||0)*(p.qte||p.qty||1)),0);
+  // ton header a id="panier-count" et "panier-total" ou "sousTotal"
+  let elCount = document.getElementById('panier-count');
+  let elTotal = document.getElementById('panier-total');
+  if(elCount) elCount.innerText = totalQty;
+  if(elTotal) elTotal.innerText = totalPrice + " $";
+}
+
+function afficherPanier(){ 
+  const panier = JSON.parse(localStorage.getItem('dn_panier')||"[]"); 
+  const liste = document.getElementById('liste-panier'); 
+  let totalQty = panier.reduce((s,p)=>s+(p.qte||p.qty||1),0);
+  document.getElementById('countPanier').innerText = totalQty + " articles"; 
+  
+  if(panier.length===0){ 
+    liste.innerHTML = "<div style='text-decoration: none; background:white; padding:30px; border-radius:18px; text-align:center;'>Ton panier est vide<br><br><a href='produits.html'>Continuer mes achats</a></div>"; 
+    calculerTotal(); 
+    updateHeader();
+    return; 
+  } 
+
+  liste.innerHTML = panier.map((p,i)=>{ 
+    let quantite = p.qte || p.qty || 1; 
+    let prixNum = parseFloat(p.prix) || 0; 
+    let sku = p.sku || p.id || "DN"; 
+    return `
+    <div class="cart-card"> 
+      <img src="${p.img}"> 
+      <div class="cart-info"> 
+        <div class="sku-mini">SKU: ${sku}</div> 
+        <div style="font-weight:700;">${p.nom}</div> 
+        <div style="color:#111; font-weight:800;">${prixNum} $</div> 
+        <div class="cart-qty"> 
+          <button onclick="changeQte(${i}, -1)">-</button> 
+          <span>${quantite}</span> 
+          <button onclick="changeQte(${i}, 1)">+</button> 
+        </div> 
+      </div> 
+      <span style="margin-left:auto; color:red; cursor:pointer;" onclick="supprimer(${i})">Supprimer</span> 
+    </div>`; 
+  }).join(''); 
+  calculerTotal(); 
+  updateHeader();
+} 
+
+function changeQte(index, delta){ 
+  let panier = JSON.parse(localStorage.getItem('dn_panier')); 
+  panier[index].qte = (panier[index].qte || panier[index].qty || 1) + delta; 
+  panier[index].qty = panier[index].qte;
+  if(panier[index].qte <=0) panier.splice(index,1); 
+  localStorage.setItem('dn_panier', JSON.stringify(panier)); 
+  afficherPanier(); 
+} 
+
+// LA FONCTION QUI TE MANQUAIT MR !
+function supprimer(index){
+  let panier = JSON.parse(localStorage.getItem('dn_panier')||"[]");
+  panier.splice(index,1);
+  localStorage.setItem('dn_panier', JSON.stringify(panier));
+  afficherPanier(); // disparaît direct, sans recharger
+}
+
+function calculerTotal(){ 
+  let panier = JSON.parse(localStorage.getItem('dn_panier')||"[]"); 
+  let sous = panier.reduce((s,p)=> s + ((parseFloat(p.prix)||0) * (p.qte||p.qty||0)),0); 
+  document.getElementById('sousTotal').innerText = sous + " $"; 
+  let liv = livraisonChoisi ? livraisonChoisi.prix : 0; 
+  document.getElementById('fraisLivraison').innerText = liv + " $"; 
+  document.getElementById('totalFinal').innerText = (sous + liv) + " $"; 
+} 
+
+function commanderWhatsApp(){ 
+  let panier = JSON.parse(localStorage.getItem('dn_panier')||"[]"); 
+  if(panier.length===0) return alert("Panier vide"); 
+  let msg = "Bonjour DN Store, je veux commander:%0A"; 
+  panier.forEach(p=>{ 
+    let q = p.qte||p.qty||1;
+    let sku = p.sku||p.id;
+    msg+=`- ${p.nom} (SKU:${sku}) x${q} = ${(parseFloat(p.prix)||0)*q} $%0A`; 
+  }); 
+  msg+=`Livraison: ${livraisonChoisi.nom}%0ATotal: ${document.getElementById('totalFinal').innerText}`; 
+  window.open("https://wa.me/243851961132?text="+msg, "_blank"); 
+} 
+
+function retourAchats(){ 
+  // retour exactement où il était
+  window.location.href = 'produits.html'; 
+} 
+
+afficherPanier(); 
+
+
+// BLOQUE COMMANDER SI PANIER VIDE
+function getPanier(){ return JSON.parse(localStorage.getItem('dn_panier')||"[]"); }
+
+function refreshPanierUI(){
+  let panier = getPanier();
+  let btn = document.getElementById('btnCommander');
+  if(!btn) return;
+  
+  if(panier.length === 0){
+    btn.style.opacity = "0.4";
+    btn.style.pointerEvents = "none"; // bloque visuellement
+    btn.style.background = "#888";
+  } else {
+    btn.style.opacity = "1";
+    btn.style.pointerEvents = "auto";
+    btn.style.background = "#000";
+  }
+}
+
+document.getElementById('btnCommander')?.addEventListener('click', (e)=>{
+  let panier = getPanier();
+  if(panier.length === 0){
+    e.preventDefault();
+    // Alerte pro
+    alert("Ton panier est vide ! Consulte les articles !");
+    // et on l'envoie voir les produits
+    window.location.href = "produits.html";
+  }
+});
+
+function retourAchats(){
+  window.location.href = "produits.html";
+}
+
+// lance au chargement
+document.addEventListener('DOMContentLoaded', refreshPanierUI);
+</script>
+<div class="nav-fleches">
+  <button onclick="history.back()" title="Retour">🔙</button>
+  <button onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Haut">🔝</button>
+</div>
+</body>
+</html>

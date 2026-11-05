@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ma Wishlist ❤</title>
+<link rel="stylesheet" href="style.css">
+<script src="dn.js"></script>
+</head>
+<body>
+
+<header class="H-wish" style="display:flex; justify-content:space-between; padding:15px; border-bottom:1px solid #eee; position:sticky; top:0; background:white; z-index:10;">
+  <a href="produits.html" style="font-weight:bold; text-decoration:none; color:#111;">DN SHOP</a>
+  <div style="display:flex; gap:15px;">
+    <a href="wishlist.html" style="text-decoration:none;">🤍 <span id="wishlist-count">0</span></a>
+    <a href="panier.html" style="text-decoration:none;">🛒 <span id="panier-count">0</span> - <span id="panier-total">0 $</span></a>
+  </div>
+</header>
+
+<div class="wish-container">
+  <h2>Ma Wishlist ❤</h2>
+  <p id="empty-msg" style="display:none; color:#777;">Ta wishlist est vide pour l'instant 🤍</p>
+  
+  <div id="wishlist-list"></div>
+
+  <div style="margin-top:25px; display:flex; gap:10px;">
+    <a href="produits.html" onclick="retourAchats(event)" style="text-decoration:none; padding:12px 18px; background:#f5f5f5; border-radius:10px; color:#111;">⬅️ Continuer mes achats</a>
+    <a href="panier.html" style="text-decoration:none; padding:12px 18px; background:#111; border-radius:10px; color:white;">Voir mon panier 🛒</a>
+  </div>
+</div>
+
+<script>
+const produitsBase = {
+  'g-star': {nom:'G-STAR', prix:8},
+  'g-standard': {nom:'G-STANDARD', prix:8},
+  'veste-complet': {nom:'VESTE COMPLET', prix:25},
+  'quatar': {nom:'QATAR', prix:10}
+};
+
+function renderWishlist(){
+  const list = document.getElementById('wishlist-list');
+  const empty = document.getElementById('empty-msg');
+  let wish = JSON.parse(localStorage.getItem('dn_wishlist') || "[]");
+  
+  if(wish.length === 0){
+    list.innerHTML = "";
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+  list.innerHTML = wish.map(item => `
+    <div class="wish-card">
+      <img src="${item.img}">
+      <div class="wish-info">
+        <strong>${item.nom}</strong><br>
+        <span>${item.prix} $</span>
+      </div>
+      <div class="btns">
+        <a href="produit.html?id=${item.id}" onclick="savePos('${item.id}')" class="btn-blanc">Voir détails</a>
+        <button onclick="ajouterAuPanier('${item.id}')" class="btn-noir">Ajouter au panier</button>
+        <button onclick="retirer('${item.id}')" class="btn-blanc">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function retirer(id){
+  let wish = JSON.parse(localStorage.getItem('dn_wishlist')||"[]");
+  wish = wish.filter(x=>x.id!==id);
+  localStorage.setItem('dn_wishlist', JSON.stringify(wish));
+  renderWishlist(); // <-- réaffiche direct sans recharger
+  if(typeof updateHeader === 'function') updateHeader();
+  alert("Retiré des favoris");
+}
+
+function ajouterAuPanier(id){
+  // On réutilise ta logique panier
+  let panier = JSON.parse(localStorage.getItem('dn_panier') || "[]");
+  let wishItem = JSON.parse(localStorage.getItem('dn_wishlist') || "[]").find(x=>x.id===id);
+  if(!wishItem) return;
+  
+  let existe = panier.find(x=>x.id===id);
+  if(!existe){
+    panier.push({...wishItem, qty:1});
+    localStorage.setItem('dn_panier', JSON.stringify(panier));
+    alert("Ajouté au panier 🛒");
+  } else {
+    alert("Déjà dans le panier");
+  }
+}
+
+function savePos(id){
+  localStorage.setItem('dn_last_product', id);
+}
+
+function retourAchats(e){
+  e.preventDefault();
+  // Retourne direct à produits.html, qui va scroller tout seul sur le dernier produit
+  window.location.href = 'produits.html';
+}
+
+renderWishlist();
+
+// Pour le compteur panier si tu as déjà la fonction
+if(typeof updatePanierCount === 'function') updatePanierCount();
+</script>
+</body>
+</html> 

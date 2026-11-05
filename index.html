@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+    <head>
+        <title>First-draft(index)</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="dn.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="top-header">
+              <!-- GAUCHE : logo -->
+              <div class="div1">
+                <a href="index.html"><img src="imgs/Logo-dav.png" alt="Logo" id="logo-principale"></a>
+                <a href="index.html" class="logo">DN Store</a>
+              </div>
+          
+              <!-- DROITE : actions -->
+              <div class="header-action">
+                <a href="produits.html">Produits</a>
+                <button id="btn-search-open" aria-label="Rechercher">🔍</button>
+                <div style="display: flex; gap: 15px;">
+                  <a href="wishlist.html" style="text-decoration: none;">🤍 <span id="wishlist-count">0</span></a>
+                  <a href="panier.html">🛒 <span id="panier-count">0.00</span> - <span id="panier-total">0 $</span></a>
+                </div>
+              </div>
+            </div>
+          
+            <!-- OVERLAY RECHERCHE - CACHÉ AU DÉPART -->
+            <div id="search-overlay">
+              <div class="search-bar">
+                <form id="form-recherche">
+                  <input type="search" id="site-search" name="q" placeholder="Rechercher un polo, jeans, Rolex...">
+                  <button type="submit">&#128269;</button>
+                </form>
+                <div id="resultats-live"></div>
+              </div>
+              <button id="btn-search-close">✕</button>
+            </div>
+          
+            <!-- le bandeau d'annonce commercial -->
+            <div class="annonce"> 🚀 Livraison standard watsap offerte dès 10$ d'achat ! <a href="#promotion">Profitez-en</a> </div>
+            
+            <div class="general1">
+              <div id="section1">
+                <h1>BIENVENUE SUR LA BOUTIQUE DE DN STORE 🛒</h1>
+                <p>Votre premier destination en mode ✨</p>
+              </div>
+              <nav class="nav-class1">
+                <ul class="nav-links">
+                  <li class="menu-fem"><a href="produits.html?categorie=femme">Femme</a></li>
+                  <li class="menu-hom"><a href="produits.html?categorie=homme">Homme</a></li>
+                  <li class="menu-enf"><a href="produits.html?categorie=enfant">Enfant</a></li>
+                  <li class="menu-sta"><a href="produits.html?categorie=standard">Standard</a></li>
+                </ul>
+              </nav>
+            </div>
+          </header>
+        <main id="main">
+            <!--BLOC A j'ajoute une photo comme background dns le div du class backphoto-->
+            <section class="backphoto">
+                <!--lien vers ma page commande () j'essai la methode de selection sur plac-->
+                
+                
+                <div class="h2s">
+                    <h2>Commander sans vous deplacer, Nous vous livrons à la maison 🏡</h2>
+                    <h2 class="sous-titre">MODE DE LIVRAISON</h2>
+                    <!--faut que j'insere un logo de transporteur, de livraison-->
+                    <div class="livraison-box">
+                        <div class="livreur">
+                            <span class="logo-livreur">📦</span>
+                            <h3>H-delivry</h3>
+                            <p>Livraison partoutn à Butembo</p>
+                        </div>
+                        <div class="livreur">
+                            <span class="logo-livreur">🏍</span>
+                            <h3>DHL Express</h3>
+                            <p>Livraison national</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <fieldset class="modes-dispo">
+                <legend>📦 Modes de commande disponibles</legend>
+                <div class="mode-list">
+                    <div class="mode-item">
+                        <span class="mode-icon">🛒</span>
+                        <div>
+                            <strong>Commande direct sur le site</strong>
+                            <p>Paiement sécurisé & suivi en temps réel</p>
+                        </div>
+                        <span class="badge-ok">Dispo</span>
+                    </div>
+                  
+                    <div class="mode-item">
+                        <span class="mode-icon">💬</span>
+                        <div>
+                            <strong>Commande via WhatsApp</strong>
+                            <p>Discute avec nous, on gère tout pour toi</p>
+                         </div>
+                        <span class="badge-ok">Dispo</span>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <div class="bandeau-solde">
+                <span class="pulse">🔥</span>
+                <p>SOLDE DU MOMENT : JUSQU'À <strong>-50%</strong> SUR TOUS LES POLOS</p>
+                <span class="badge">Cette semaine seulement</span>
+                <span class="pulse">🔥</span>
+            </div>
+            <section class="category1">
+            <!--je cree des divs qui auront un back ground d'une image qui va montrer l'arrivage de la semaine-->
+                <h2 class="titre">Nouveaux articles de la semaine</h2>
+                <a href="produits.html#nouveaute">Voir les articles ➡</a>
+            </section>
+            
+            <h2 class="produitdispo">Nos produits disponible</h2>
+
+            <section class="category polos">
+                <h2 class="titre">Nos polos</h2>
+                <p class="paragraphe">Découvrez nos polos : <strong>classe</strong> <strong>simple</strong> <strong>God quality 👌</strong> disponibles en toute taille, couleur et marque ✔</p>
+                <a href="produits.html#polos" class="btn-voir">Voir les polos ➡</a>
+            </section>
+
+            <section class="category tricots">
+                <h2 class="titre">Nos tricots</h2>
+                <p class="paragraphe">Restez styler quelque soit le climent. Nos tricots disponibles en toute taille, couleur et marque ✔</p>
+                <a href="produits.html#tricots" class="btn-voir">Voir nos tricots ➡</a>
+            </section>
+
+            <section class="category haut">
+                <h2 class="titre">NOS HAUT</h2>
+                <p class="paragraphe">Nos hauts <strong>(Vetemens du haut)</strong>. Disponible en toute taille, couleur et marque ✔</p>
+                <div>
+                    <ul>
+                        <li>chemises</li>
+                        <li>julets</li>
+                    </ul>
+                </div>
+                <a href="produits.html#hauts" class="btn-voir">Voir nos haut ➡</a>
+            </section>
+
+            <section class="category bas">
+                <h2 class="titre">NOS BAS</h2>
+                <p class="paragraphe">Nos bas <strong>(Vetemens inférieurs)</strong>. Disponible en toute taille, couleur et marque ✔</p>
+                <div>
+                    <ul>
+                        <li>G-Standard / Ralf</li>
+                        <li>Zara / Jeans</li>
+                        <li>Shorts</li>
+                        <li>Autre pantalon</li>
+                    </ul>
+                </div>
+                <a href="produits.html#bas" class="btn-voir">Voir les bas ➡</a>
+            </section>
+
+            <section class="category costume">
+                <h2 class="titre">NOS COSTUMES</h2>
+                <p class="paragraphe">decouvre la qualité de nos costumes <strong>(VESTE)</strong>. Disponible en toutes couleurs et marques ✔</p>
+                <div>
+                    <ul>
+                       <li>Veste complet</li>
+                       <li>Qatard</li>
+                    </ul>
+                </div>
+                <a href="produits.html#costumes" class="btn-voir">Voir les costume ➡</a>
+            </section>
+
+            <section class="category chaussure">
+                <h2 class="titre">NOS CHAUSSURES</h2>
+                <p class="paragraphe">Nouvel arrivage de chaussure de la semaine Disponible en toutes tailles et marques ✔</p>
+                <div>
+                    <ul>
+                        <li>Chaussures fermer</li>
+                        <li>Sandals</li>
+                    </ul>
+                 </div>
+                <a href="produits.html#chaussures" class="btn-voir">Voir nos chaussures ➡</a>
+            </section>
+
+            <section class="category accessoires">
+                    <h2 class="titre">Autre Accessoires</h2>
+                    <p>Montre (Rolex)</p>
+                    <p>Chapeaux</p>
+                    <p>Chenettes - Bracelets...</p>
+                    <a href="produits.html#accessoires" class="btn-voir">Voir les accessoires ➡</a>
+            </section>
+        </main>
+        <div class="avant-footer">
+            <section class="premier-commande">
+                <p><strong>Pour votre premier commande (achat)</strong></p>
+                <ul>
+                    <li>✅-10% sur votre premier commande</li>
+                    <li>📦Amballage et Livraison special</li>
+                </ul>
+            </section>
+        
+            <nav>
+                <div class="table">
+                    <h4>Lien rapides</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="produits.html">Produits</a></li>
+                        <li><a href="plan-du-site.html">Plan du site</a></li>
+                    </ul>
+                </div>
+                <div class="socials-avant">
+                    <h4>suiver nous sur :</h4>
+                    <div class="icons-avant">
+                        <a href="https://wa.me/243851961132" target="_blank"><img src="imgs/wat.png" alt="Compte WhatsApp" width="50" height="50"><span>WhatsApp</span></a>
+                        <a href="https://www.facebook.com/share/1LqJcCoWGK/" target="_blank"><img src="imgs/fac.png" alt="Compte facebook" width="50" height="50"><span>Facebook</span></a>
+                        <a href="https://instagram.com/KYASWADAVID" target="_blank"><img src="imgs/insta.png" alt="Page instagram" width="50" height="50"><span>Instagram</span></a>
+                        <a href="https://www.tiktok.com/@f.kavisky" target="_blank"><img src="imgs/tik.png" alt="Compte tiktok" width="50" height="50"><span>Tiktok</span></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <footer>
+            <section>
+                <h2>DN STORE🛒</h2>
+                <p>La boutique qui vous habille sans vous déplacer.</p>
+            </section>
+
+            <section>
+                    <h3>Mention légales</h3>
+                    <ul>
+                        <li>
+                            <a href="mentions-legals.html">Mentions légales</a>
+                        </li>
+                        <li>
+                            <a href="cgv.html">Condition générales de vente</a>
+                        </li>
+                        <li>
+                            <a href="plan-du-site.html">Plan du site</a>
+                        </li>
+                    </ul>
+                    <p>📍 Marché central, BUTEMBO🛍</p>
+            </section>
+            <p id="copiright">© 2026 DN Store. Tout droits réservés.</p>
+        </footer>
+        <!-- BOTTOM NAV FIXE PRO DN STORE -->
+        <div class="bottom-nav show" id="bottomNav">
+            <a href="index.html" class="nav-item"><span>🏠</span>ACCUEIL</a>
+            <a href="produits.html" class="nav-item"><span>🛍</span>PRODUITS <b id="bottom-produits-badge" class="badge-new" style="display:none;">0</b></a>
+            <a href="panier.html" class="nav-item"><span>🛒</span>PANIER <b id="nombre-articles">0</b></a>
+            <a href="profil.html" class="nav-item"><span>👤</span>PROFIL</a>
+          </div>
+      <script>
+        // RECHERCHE DN STORE - VERSION CLEAN
+const tousLesProduits = [
+  { nom: "Jeans", q: "jeans" }, { nom: "Polo Nike", q: "polo nike" },
+  { nom: "Polo 1977", q: "polo 1977" }, { nom: "Polo de marque", q: "polo de marque" },
+  { nom: "Chemise", q: "chemise" }, { nom: "T-shirt", q: "tshirt" }
+];
+
+const input = document.getElementById('site-search');
+const form = document.getElementById('form-recherche');
+const liveBox = document.getElementById('resultats-live');
+
+if(input){
+  input.addEventListener('input', () => {
+    let q = input.value.toLowerCase().trim();
+    liveBox.innerHTML = '';
+    if(q.length < 2) return;
+    tousLesProduits.filter(p=>p.nom.toLowerCase().includes(q))
+      .forEach(p=>{
+        liveBox.innerHTML += `<a href="produits.html?q=${encodeURIComponent(p.q)}" class="live-item">${p.nom}</a>`;
+      });
+  });
+}
+
+if(form){
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    let q = input.value.trim();
+    if(q) window.location.href = `produits.html?q=${encodeURIComponent(q)}`;
+  });
+}
+
+// LOGIQUE SUR produits.html
+if(window.location.pathname.includes('produits.html')){
+  const params = new URLSearchParams(window.location.search);
+  let q = params.get('q');
+  if(q){
+    let qLower = q.toLowerCase().trim();
+    document.body.classList.add('en-recherche');
+
+    // 1. Crée le header de résultat si pas là
+    let zone = document.querySelector('.general1-p') || document.body;
+    if(!document.getElementById('resultat-header')){
+      let h = document.createElement('div');
+      h.id = 'resultat-header';
+      h.textContent = `RÉSULTATS POUR "${q}"`;
+      zone.prepend(h);
+    }
+
+    // 2. Filtre les produits
+    let trouve = 0;
+    document.querySelectorAll('.product-cart').forEach(card=>{
+      let btn = card.querySelector('.add-to-cart');
+      let nom = (btn?.dataset?.nom || card.textContent || "").toLowerCase();
+      if(nom.includes(qLower)){ card.style.display=''; trouve++; }
+      else { card.style.display='none'; }
+    });
+
+    // 3. Cache les sections vides
+    document.querySelectorAll('.products-category, section, .product-category').forEach(sec=>{
+      let cartes = sec.querySelectorAll('.product-cart');
+      if(cartes.length===0) return;
+      let visibles = [...cartes].filter(c=>c.style.display!=='none').length;
+      sec.style.display = visibles===0 ? 'none' : '';
+    });
+
+    if(trouve===0){
+      document.getElementById('resultat-header').textContent = `Aucun résultat pour "${q}"`;
+    }
+
+    if(input) input.value = q;
+  }
+}
+
+// --- LOUPE HEADER LOGIQUE ---
+const overlay = document.getElementById('search-overlay');
+const btnOpen = document.getElementById('btn-search-open');
+const btnClose = document.getElementById('btn-search-close');
+
+if(btnOpen && overlay){
+  btnOpen.addEventListener('click', ()=>{
+    overlay.classList.add('active');
+    setTimeout(()=> document.getElementById('site-search')?.focus(), 100);
+  });
+  btnClose.addEventListener('click', ()=>{
+    overlay.classList.remove('active');
+  });
+  // Ferme avec Echap
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape') overlay.classList.remove('active');
+  });
+}
+      </script>
+        <div class="nav-fleches">
+        <button onclick="history.back()" title="Retour">🔙</button>
+        <button onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Haut">🔝</button>
+      </div>
+    </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commande - DN Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="commande-page">
+<header><div class="top-header"><div class="div1"><a href="index.html" style="color: #000; text-decoration: none; font-weight: bold;"><img src="imgs/logo-dav.png" alt="logo" style="width:40px;"> DN Store</a></div><div class="header-action"><a href="produits.html">Produits</a><a href="panier.html">Panier <span id="total-panier">0</span></a></div></div></header>
+<div class="steps"><span>1</span><b>Panier</b><div class="line active"></div><span>2</span><b>Coordonnées</b><div class="line"></div><span>3</span>Confirmation</div>
+
+<div class="commande-container">
+  <div class="card">
+    <h2><i>1</i> Vos coordonnées</h2>
+    <div class="field"><label>Nom complet *</label><div class="input-wrap"><span class="ico">👤</span><input type="text" id="client-nom" placeholder="Vos 2 noms"></div></div>
+    <div class="field"><label>WhatsApp *</label><div class="input-wrap"><span class="ico">📱</span><input type="tel" id="client-tel" placeholder="097..."></div></div>
+    <div class="field"><label>Email (optionnel)</label><div class="input-wrap"><span class="ico">✉️</span><input type="email" id="client-email" placeholder="email@gmail.com (pour facture)"></div></div>
+    <div class="field"><label>Quartier *</label><div class="input-wrap"><span class="ico">📍</span><select id="client-adresse"><option value="">Choisir...</option><option>Mutiri</option><option>Evêché</option><option>Londo</option><option>Makoka</option><option>Kampali</option><option>Mukuna</option><option>Autre</option></select></div></div>
+    <div class="field"><label>Mode de livraison</label><div class="input-wrap"><span class="ico">🚚</span><select id="client-livraison"><option>Retrait au shop - Gratuit</option><option>Livraison à domicile - 1$</option></select></div></div>
+    <div class="field"><label>Moyen de paiement *</label><div class="input-wrap"><span class="ico">💳</span><select id="client-paiement"><option value="Paiement à la livraison">Paiement à la livraison (Cash)</option><option value="M-Pesa / Airtel Money">M-Pesa / Airtel Money</option><option value="Mobile Money">Mobile Money RDC</option></select></div></div>
+    <div class="field"><label>Note (taille déjà choisie en haut)</label><div class="input-wrap"><textarea id="client-note" rows="2" placeholder="Info supplémentaire..."></textarea></div></div>
+  </div>
+
+  <div class="card card-recap">
+    <h2><i>2</i> Récapitulatif</h2>
+    <div class="order-meta" id="order-meta"></div>
+    <div id="recap-produits"></div>
+    <div class="field" style="margin-top:15px;"><label>Code promo</label><div class="promo-box"><input type="text" id="code-promo" placeholder="Ex: DN10"><button onclick="appliquerPromo()">Appliquer</button></div><small id="promo-msg" style="font-size:12px; color:#00b050;"></small></div>
+    <div id="recap-totaux" style="margin-top:15px;"></div>
+    <button class="btn-confirm" onclick="confirmerCommande()">Confirmer #<span id="order-num">...</span> 💬</button>
+    <div style="text-align:center; font-size:11px; color:#777; margin-top:10px;">🔒 Commande sécurisée DN Store Butembo</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. NUMERO COMMANDE UNIQUE
+  let counter = parseInt(localStorage.getItem('dn_order_counter') || '1042');
+  let orderId = '#DN' + counter;
+  document.getElementById('order-num').textContent = orderId;
+  
+  // 2. DATE ET HEURE
+  let now = new Date();
+  let dateStr = now.toLocaleString('fr-FR', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+  document.getElementById('order-meta').innerHTML = `Commande: <b>${orderId}</b><br>Date: ${dateStr}<br>Statut: <span class="badge-status">En attente - Non payé</span><br>Paiement: <span id="meta-paiement">Paiement à la livraison</span>`;
+
+  function getPanier(){ 
+    for(let k of ['dn_panier','panier']){ try{ let d=JSON.parse(localStorage.getItem(k)||'[]'); if(d.length) return d; }catch(e){} } return [];
+  }
+  let panier = getPanier();
+  let promoRemise = 0;
+  let promoCode = '';
+
+  window.appliquerPromo = function(){
+    let code = document.getElementById('code-promo').value.trim().toUpperCase();
+    let msg = document.getElementById('promo-msg');
+    if(code==='DN10'){ promoRemise = 0.10; promoCode='DN10 (-10%)'; msg.textContent='✅ -10% appliqué'; }
+    else if(code==='BIENVENUE'){ promoRemise = 2; promoCode='BIENVENUE (-2$)'; msg.textContent='✅ -2$ appliqué'; msg.style.color='#00b050'; }
+    else { promoRemise=0; promoCode=''; msg.textContent='❌ Code invalide'; msg.style.color='red'; }
+    afficherRecap();
+  }
+
+  function afficherRecap(){
+    let recapDiv=document.getElementById('recap-produits');
+    let totauxDiv=document.getElementById('recap-totaux');
+    if(!panier.length){ recapDiv.innerHTML='<p style="text-align:center;color:#888;">Panier vide</p>'; return; }
+    let html=''; let sousTotal=0; let totalQte=0;
+    panier.forEach(p=>{
+      let prix=parseFloat(p.prix||0); let qte=parseInt(p.qte||1); sousTotal+=prix*qte; totalQte+=qte;
+      // 3. VARIANTES
+      let variante = '';
+      if(p.taille) variante += `Taille: ${p.taille} `;
+      if(p.couleur) variante += `Couleur: ${p.couleur}`;
+      html+=`<div class="recap-item"><img src="${p.image||p.img||'imgs/logo-dav.png'}"><div class="info"><b>${p.nom}</b><small>${qte} x ${prix}$<br><i>${variante}</i></small></div><b>${(prix*qte).toFixed(2)}$</b></div>`;
+    });
+    recapDiv.innerHTML=html;
+
+    let livraison = document.getElementById('client-livraison').value.includes('1$') ? 1 : 0;
+    if(sousTotal>=100) livraison=0;
+    let remiseVal = 0;
+    if(typeof promoRemise==='number'){
+      remiseVal = promoRemise<1 ? sousTotal*promoRemise : promoRemise;
+    }
+    let total = sousTotal + livraison - remiseVal;
+    if(total<0) total=0;
+    window.sousTotal=sousTotal; window.livraison=livraison; window.remiseVal=remiseVal; window.totalFinal=total; window.mPanier=panier;
+
+    totauxDiv.innerHTML=`
+      <div class="total-line"><span>Sous-total</span><span>${sousTotal.toFixed(2)}$</span></div>
+      <div class="total-line"><span>Livraison</span><span>${livraison==0?'OFFERT':livraison+'$'}</span></div>
+      ${remiseVal>0?`<div class="total-line" style="color:#00b050;"><span>Remise ${promoCode}</span><span>-${remiseVal.toFixed(2)}$</span></div>`:''}
+      <div class="total-final"><span>TOTAL</span><span>${total.toFixed(2)}$</span></div>
+    `;
+    document.getElementById('total-panier').textContent=totalQte;
+  }
+
+  document.getElementById('client-livraison').addEventListener('change', afficherRecap);
+  document.getElementById('client-paiement').addEventListener('change', (e)=>{ document.getElementById('meta-paiement').textContent=e.target.value; });
+  afficherRecap();
+
+  window.confirmerCommande = function(){
+    let nom=document.getElementById('client-nom').value.trim();
+    let tel=document.getElementById('client-tel').value.trim();
+    let email=document.getElementById('client-email').value.trim();
+    let adresse=document.getElementById('client-adresse').value;
+    let paiement=document.getElementById('client-paiement').value;
+    let livraisonMode=document.getElementById('client-livraison').value;
+    let note=document.getElementById('client-note').value.trim();
+    if(!nom||!tel||!adresse){ alert('Remplis Nom, WhatsApp et Adresse'); return; }
+
+    // Incrémente numéro commande
+    localStorage.setItem('dn_order_counter', counter+1);
+
+    let msg = `*NOUVELLE COMMANDE ${orderId}*%0A*Date:* ${dateStr}%0A*Statut:* En attente - Non payé%0A%0A*CLIENT*%0ANom: ${nom}%0ATel: ${tel}%0A${email?'Email: '+email+'%0A':''}Adresse: ${adresse}%0APaiement: ${paiement}%0ALivraison: ${livraisonMode}%0A%0A*PRODUITS*%0A`;
+    window.mPanier.forEach(p=>{
+      let varTxt = '';
+      if(p.taille) varTxt+=` Taille:${p.taille}`;
+      if(p.couleur) varTxt+=` Couleur:${p.couleur}`;
+      msg+=`- ${p.qte}x ${p.nom} (${varTxt}) - ${p.prix}$%0A`;
+    });
+    msg+=`%0A Sous-total: ${window.sousTotal}$%0A Livraison: ${window.livraison}$%0A ${window.remiseVal>0?' Remise: -'+window.remiseVal.toFixed(2)+'$ ('+promoCode+')%0A':''} *TOTAL: ${window.totalFinal.toFixed(2)}$*%0A`;
+    if(note) msg+=`Note: ${note}%0A`;
+
+    window.open(`https://wa.me/243851061132?text=${msg}`, '_blank');
+  }
+});
+</script>
+</body>
+</html>
