@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DN-Store | Admin - Produits</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <button id="btnClose" class="btn-close">✕</button>
+    <div class="logo">DN-<span>Store</span><small>ADMIN</small></div>
+    <nav>
+      <a href="admin.html">📊 Tableau de bord</a>
+      <a href="admin-produits.html" class="active">🛍 Produits</a>
+      <a href="admin-commandes.html">📦 Commandes</a>
+      <a href="admin-clients.html">👥 Clients</a>
+      <a href="../index.html">🌐 Voir le site</a>
+    </nav>
+    <button id="btnLogout" class="logout">Déconnexion</button>
+  </aside>
+
+  <main class="main">
+    <button id="btnMenu" class="btn-menu">☰</button>
+    <div id="overlay" class="overlay"></div>
+
+    <header class="topbar">
+      <div>
+        <h1>Produits</h1>
+        <p id="resumeProduits">0 produit(s) - 0 en rupture - 0 en critique</p>
+      </div>
+      <input type="text" id="searchProduit" placeholder="Rechercher un produit..." class="search" style="width:220px">
+    </header>
+
+    <section class="grid-2" style="grid-template-columns: 380px 1fr; align-items:start">
+      <!-- FORMULAIRE -->
+      <div class="box">
+        <h3 id="titreForm">+ Ajouter un produit</h3>
+        <form id="formProduit" class="form-prod">
+          <label>Photo du produit</label>
+          <input type="file" id="photoInput" accept="image/*">
+          <img id="previewPhoto" class="preview" style="display:none">
+          <small style="color:#888">Ou colle un lien photo : </small>
+          <input type="text" id="photoUrl" placeholder="imgs/chaussure1.jpg ou https://...">
+
+          <label>Section du produit *</label>
+          <select id="categorie" required style="padding:11px;border:1px solid #ddd;border-radius:10px;width:100%">
+            <option value="">-- Choisis la section --</option>
+            <option value="Nos polos">👕 Nos polos</option>
+            <option value="Nos tricots">🧶 Nos tricots</option>
+            <option value="Nos hauts">👔 Nos hauts</option>
+            <option value="Nos bas">👖 Nos bas</option>
+            <option value="Nos costumes">🤵 Nos costumes</option>
+            <option value="Nos chaussures">👟 Nos chaussures</option>
+            <option value="Accessoires">🎩 Accessoires</option>
+          </select>
+
+          <label>Nom du produit *</label>
+          <input type="text" id="nom" placeholder="Ex: Nike Air Max" required>
+
+          <label>Prix ($) *</label>
+          <input type="number" id="prix" placeholder="45000" required>
+
+         <label>Tailles dispo *</label>
+          <div class="checks" id="tailles">
+            <small style="color:#888">Choisis d'abord la section en haut, les tailles vont apparaître ici.</small>
+          </div>
+
+          <label>Couleurs</label>
+          <div class="checks">
+            <label><input type="checkbox" name="couleur" value="Noir"> Noir</label>
+            <label><input type="checkbox" name="couleur" value="Blanc"> Blanc</label>
+            <label><input type="checkbox" name="couleur" value="Rouge"> Rouge</label>
+            <label><input type="checkbox" name="couleur" value="Bleu"> Bleu</label>
+            <label><input type="checkbox" name="couleur" value="Vert"> Vert</label>
+            <label><input type="checkbox" name="couleur" value="Marron"> Marron</label>
+          </div>
+
+          <label>Stock *</label>
+          <input type="number" id="stock" placeholder="12" required>
+
+          <label>Description</label>
+          <textarea id="description" rows="3" placeholder="Chaussure confortable, livraison à Goma..."></textarea>
+
+          <button type="submit" class="btn-primary" style="width:100%;border:none;cursor:pointer">Enregistrer le produit</button>
+          <button type="button" id="btnAnnuler" class="logout secondary" style="width:100%;margin-top:8px;display:none">Annuler la modification</button>
+        </form>
+      </div>
+
+      <!-- LISTE fc -->
+      <div class="box">
+        <div class="box-head">
+          <h3>Liste des produits</h3>
+          <div>
+            <select id="filtreSection" style="padding:7px 10px;border-radius:20px;border:1px solid #ddd">
+              <option value="tous">Toutes les sections</option>
+              <option value="Nos polos">👕 Polos</option>
+              <option value="Nos tricots">🧶 Tricots</option>
+              <option value="Nos hauts">👔 Hauts</option>
+              <option value="Nos bas">👖 Bas</option>
+              <option value="Nos costumes">🤵 Costumes</option>
+              <option value="Nos chaussures">👟 Chaussures</option>
+              <option value="Accessoires">🎩 Accessoires</option>
+            </select>
+            <button class="filter-btn" data-filtre="rupture">Rupture</button>
+            <button class="filter-btn" data-filtre="critique">Critique</button>
+          </div>
+        </div>
+        <div id="listeProduitsPage"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="admin-produits.js"></script>
+</body>
+</html>
