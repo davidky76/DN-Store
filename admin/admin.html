@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DN-Store | Admin - Tableau de bord</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+  <button id="btnClose" class="btn-close">✕</button>
+  <div class="logo">DN-<span>Store</span><small>ADMIN</small></div>
+
+    <nav>
+      <a href="admin.html" class="active">📊 Tableau de bord</a>
+      <a href="admin-produits.html">👟 Produits</a>
+      <a href="admin-commandes.html">📦 Commandes</a>
+      <a href="admin-clients.html">👥 Clients</a>
+      <a href="index.html">🌐 Voir le site</a>
+    </nav>
+    <button id="btnReset" class="logout secondary">Effacer données démo</button>
+    <button id="btnLogout" class="logout">Déconnexion</button>
+  </aside>
+
+  <main class="main">
+   <!-- BOUTON MENU MOBILE -->
+<button id="btnMenu" class="btn-menu">☰</button>
+<div id="overlay" class="overlay"></div>
+
+    <header class="topbar">
+      <div>
+        <h1>Tableau de bord</h1>
+        <p>Bienvenue, Admin. Voici l'état de DN-Store.</p>
+      </div>
+      <a href="admin-produits.html" class="btn-primary">+ Ajouter un produit</a>
+    </header>
+
+    <div id="stockAlert" class="alert hidden"></div>
+
+    <section class="cards">
+      <div class="card"><span>Chiffre d'affaires</span><h2 id="statCA">0 FC</h2><small>Livrées + Expédiées</small></div>
+      <div class="card"><span>Commandes</span><h2 id="statCommandes">0</h2><small>Total reçues</small></div>
+      <div class="card"><span>Produits</span><h2 id="statProduits">0</h2><small id="statProduitsDetail">0 en stock</small></div>
+      <div class="card"><span>Clients</span><h2 id="statClients">0</h2><small>Clients différents</small></div>
+    </section>
+
+    <section class="grid-2">
+      <div class="box">
+        <div class="box-head">
+          <h3>Commandes récentes</h3>
+          <input type="text" id="searchCmd" placeholder="Rechercher client..." class="search">
+        </div>
+        <div id="listeCommandes"></div>
+        <a href="admin-commandes.html" class="link-more">Voir toutes les commandes →</a>
+      </div>
+
+      <div class="box">
+        <div class="box-head"><h3>Produits à surveiller</h3><a href="admin-produits.html">Gérer</a></div>
+        <div id="listeProduits"></div>
+        <div class="legend">
+          <span><i class="dot green"></i> En stock</span>
+          <span><i class="dot orange"></i> Critique : 1 à 5</span>
+          <span><i class="dot red"></i> Rupture : 0</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="box mt">
+      <div class="box-head"><h3>Résumé rapide</h3></div>
+      <p id="resumeText" class="resume"></p>
+    </section>
+  </main>
+</div>
+<script src="admin.js"></script>
+</body>
+</html>;

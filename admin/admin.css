@@ -1,0 +1,72 @@
+/* ==== FOR DASHLOAD ==== */
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f1f3f6;color:#111}
+.admin-layout{display:flex;min-height:100vh}
+.sidebar{width:240px;background:#111;color:#fff;padding:24px 16px;display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0}
+.logo{font-size:24px;font-weight:900;margin-bottom:30px}
+.logo span{color:#ff6b00}
+.logo small{display:block;font-size:11px;letter-spacing:2px;color:#aaa;font-weight:400}
+.sidebar nav{display:flex;flex-direction:column;gap:6px}
+.sidebar nav a{color:#ddd;text-decoration:none;padding:11px 12px;border-radius:10px}
+.sidebar nav a.active,.sidebar nav a:hover{background:#ff6b00;color:#fff}
+.logout{margin-top:auto;background:transparent;border:1px solid #444;color:#fff;padding:10px;border-radius:10px;cursor:pointer}
+.main{margin-left:240px;flex:1;padding:24px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.topbar h1{font-size:26px}
+.topbar p{color:#666;font-size:14px}
+.btn-primary{background:#ff6b00;color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px;font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.card{background:#fff;padding:18px;border-radius:14px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.card span{color:#777;font-size:13px}
+.card h2{font-size:26px;margin:8px 0 4px}
+.card small{color:#999}
+.alert{background:#fff3cd;border:1px solid #ffcc00;padding:14px;border-radius:12px;margin-bottom:16px;font-weight:700}
+.alert.danger{background:#ffe3e3;border-color:#ff4d4d}
+.hidden{display:none}
+.grid-2{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.box{background:#fff;padding:18px;border-radius:14px}
+.box-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.box-head a{color:#ff6b00;text-decoration:none;font-weight:700;font-size:13px}
+.ligne{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #eee}
+.ligne:last-child{border:none}
+.ligne b{font-size:14px}
+.ligne small{color:#777}
+.badge{padding:5px 10px;border-radius:20px;font-size:12px;font-weight:700}
+.badge-recue{background:#ffe8c7;color:#9a5b00}
+.badge-preparation{background:#dbeafe;color:#1d4ed8}
+.badge-expediee{background:#e9d5ff;color:#6b21a8}
+.badge-livree{background:#d1fae5;color:#065f46}
+.badge-annulee{background:#fee2e2;color:#991b1b}
+.badge-rupture{background:#fee2e2;color:#991b1b}
+.badge-critique{background:#fef3c7;color:#92400e}
+.badge-ok{background:#d1fae5;color:#065f46}
+.empty{color:#888;padding:16px 0;text-align:center}
+select{padding:6px;border-radius:8px;border:1px solid #ddd}
+
+.btn-menu{display:none;background:#111;color:#fff;border:none;font-size:22px;padding:10px 14px;border-radius:10px;cursor:pointer;position:fixed;top:14px;left:14px;z-index:999}
+.btn-close{display:none;background:transparent;color:#fff;border:none;font-size:20px;position:absolute;top:14px;right:14px;cursor:pointer}
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:999}
+
+@media(max-width:900px){
+  .btn-menu{display:block}
+  .sidebar{transform:translateX(-100%);transition:0.3s;z-index:1000;box-shadow:5px 0 20px rgba(0,0,0,0.3)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar.open .btn-close{display:block}
+  .overlay.show{display:block}
+  .main{margin-left:0;padding-top:70px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .grid-2{grid-template-columns:1fr}
+}
+
+
+.search{padding:8px 10px;border:1px solid #ddd;border-radius:8px;width:170px}
+.link-more{display:block;margin-top:12px;color:#ff6b00;text-decoration:none;font-weight:700;font-size:13px}
+.mt{margin-top:14px}
+.resume{color:#444;line-height:1.6}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:#666}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+.dot.green{background:#22c55e}.dot.orange{background:#f59e0b}.dot.red{background:#ef4444}
+.logout.secondary{margin-bottom:8px;border-color:#ff6b00;color:#ff6b00}
+
+/* fin du dashload */
