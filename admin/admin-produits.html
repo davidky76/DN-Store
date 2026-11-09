@@ -20,7 +20,7 @@
     </nav>
     <button id="btnLogout" class="logout">Déconnexion</button>
   </aside>
-
+<!--Prix-->
   <main class="main">
     <button id="btnMenu" class="btn-menu">☰</button>
     <div id="overlay" class="overlay"></div>
@@ -36,13 +36,30 @@
     <section class="grid-2" style="grid-template-columns: 380px 1fr; align-items:start">
       <!-- FORMULAIRE -->
       <div class="box">
-        <h3 id="titreForm">+ Ajouter un produit</h3>
+        <h3 id="titreForm" style="padding: 4px;">+ Ajouter un produit</h3>
         <form id="formProduit" class="form-prod">
           <label>Photo du produit</label>
           <input type="file" id="photoInput" accept="image/*">
           <img id="previewPhoto" class="preview" style="display:none">
           <small style="color:#888">Ou colle un lien photo : </small>
           <input type="text" id="photoUrl" placeholder="imgs/chaussure1.jpg ou https://...">
+          <label>Photo 2 - autre angle</label>
+          <input type="file" id="photoInput2" accept="image/*">
+          <img id="previewPhoto2" class="preview" style="display:none">
+          <small style="color:#888">Ou colle un lien photo 2 :</small>
+          <input type="text" id="photoUrl2" placeholder="imgs/chaussure2.jpg ou https://...">
+
+          <label>Photo 3 - détail / dos</label>
+          <input type="file" id="photoInput3" accept="image/*">
+          <img id="previewPhoto3" class="preview" style="display:none">
+          <small style="color:#888">Ou colle un lien photo 3 :</small>
+          <input type="text" id="photoUrl3" placeholder="imgs/chaussure3.jpg ou https://...">
+
+          <label>Photo 4 - porté / zoom</label>
+          <input type="file" id="photoInput4" accept="image/*">
+          <img id="previewPhoto4" class="preview" style="display:none">
+          <small style="color:#888">Ou colle un lien photo 4 :</small>
+          <input type="text" id="photoUrl4" placeholder="imgs/chaussure4.jpg ou https://...">
 
           <label>Section du produit *</label>
           <select id="categorie" required style="padding:11px;border:1px solid #ddd;border-radius:10px;width:100%">
@@ -56,11 +73,21 @@
             <option value="Accessoires">🎩 Accessoires</option>
           </select>
 
+          <label>Catégorie - pour qui ?</label>
+          <select id="genre" required style="padding: 11px;border: 1px solid #ddd;border-radius: 10px;width: 100%;">
+            <option value="">-- Pour qui ?</option>
+            <option value="femme">👩 Femme</option>
+            <option value="femme">🧑 Homme</option>
+            <option value="femme">👦 Enfant</option>
+            <option value="femme">👥 Standard - Pour tout le monde</option>
+          </select>
+
           <label>Nom du produit *</label>
           <input type="text" id="nom" placeholder="Ex: Nike Air Max" required>
 
           <label>Prix ($) *</label>
-          <input type="number" id="prix" placeholder="45000" required>
+          <input type="number" id="prix" placeholder="prix en $" step="0.5" required>
+          <small style="color:#777">ex: 8$ = 18 400 FC automatiquement coté client</small>
 
          <label>Tailles dispo *</label>
           <div class="checks" id="tailles">

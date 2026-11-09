@@ -58,17 +58,47 @@ const PRODUCTS_DB = {
   "polo-1977": { id: "polo-1977", nom: "Polo 1977", desc: "Un polo parfait pour vos rendez-vous", ancien: 12, nouveau: 8, sku: "DN-POLO-002", tailles: "S - M - L - XL", couleurs: [{nom:"Noir", code:"black"}, {nom:"Blanc", code:"white"}], images: ["imgs/polo2.jpg","imgs/polo.jpeg","imgs/pol4.jpg","imgs/nos-polo1.jpeg"] },
 };
 
+// --- DN-STORE : Produits venant de l'admin ---
+function getProduitAdmin(id){
+  if(!id.startsWith('admin-')) return null;
+  const vraiId = Number(id.replace('admin-', ''));
+  const produits = JSON.parse(localStorage.getItem('dn_produits') || '[]');
+  const p = produits.find(x => x.id === vraiId);
+  if(!p) return null;
+
+  // On convertit le format admin -> format image produit.html
+  return {
+    id: id,
+    nom: p.nom,
+    desc: p.description || '',
+    ancien: 0, // pas d'ancien prix en admin pour l'instant
+    nouveau: Number(p.prix), // prix en $ comme tu l'as voulu
+    sku: "DN-" + p.categorie.toUpperCase().replace('NOS ','') + "-" + p.id,
+    tailles: (p.tailles || ['Standard']).join(' - '),
+    // Tes couleurs admin sont des mots : "Blanc", "Noir" -> on leur donne un code couleur
+    couleurs: (p.couleurs || ['Noir']).map(nomCouleur => {
+      const map = { 'Blanc':'white', 'Noir':'black', 'Rouge':'red', 'Bleu':'blue', 'Vert':'green', 'Beige':'beige', 'Gris':'#777', 'Jaune':'yellow', 'Rose':'pink', 'Marron':'brown', 'Choco':'rgb(43,31,31)' };
+      return { nom: nomCouleur, code: map[nomCouleur] || nomCouleur.toLowerCase() };
+    }),
+    images: (p.images && p.images.length ? p.images.filter(Boolean).map(img => img.replace(/^\.\.\//, '')) : [p.photo || 'imgs/default.jpg']),
+    stock: p.stock,
+    genre: p.genre,
+    categorie: p.categorie
+  };
+}
+
 let selectedTaille = null;
 let selectedCouleur = null;
 
 function getId(){
    return new URLSearchParams(window.location.search).get('id') || 'polo-de-marque'; 
-   return new URLSearchParams(window.location.search).get('id') || 'polo-nike'; 
   }
+
+
 
 function render(){
   const id = getId();
-  const p = PRODUCTS_DB[id];
+  const p = PRODUCTS_DB[id] || getProduitAdmin(id);
   const root = document.getElementById('produit-root');
   if(!p){ root.innerHTML = `<div style="text-align:center; padding:40px;">Produit non trouvé<br><a href="produits.html">Continuer mes achats</a></div>`; return; }
   
@@ -91,7 +121,10 @@ function render(){
         <h1 style="margin:12px 0 5px; color:#000; font-weight:bold;">${p.nom}</h1>
         <p style="color:#666;">${p.desc}</p>
         <p style="font-size:13px; margin-top:8px;">SKU: ${p.sku}</p>
-        <div class="prix-box"><span class="ancien-prix">${p.ancien} $</span><span class="nouveau-prix">${p.nouveau} $</span></div>
+        <div class="prix-box">
+          ${p.ancien ? `<span class="ancien-prix">${p.ancien} $</span>` : ''}
+          <span class="nouveau-prix">${p.nouveau} $ / ${(p.nouveau * 2300).toLocaleString()} FC</span>
+        </div>
 
         <div class="opt">
           <span>Couleur disponible: <b id="couleur-label" style="color:#111;">Choisis</b></span>
@@ -144,45 +177,72 @@ function selectTaille(taille, el){
 }
 
 function addPanier(id){
-  if(!selectedCouleur){
-    document.getElementById('error-couleur').style.display='block';
-    return;
-  }
-  if(!selectedTaille){
-    document.getElementById('error-taille').style.display='block';
-    return;
-  }
+  if(!selectedCouleur){ document.getElementById('error-couleur').style.display='block'; return; }
+  if(!selectedTaille){ document.getElementById('error-taille').style.display='block'; return; }
 
-  const p = PRODUCTS_DB[id];
+  const p = PRODUCTS_DB[id] || getProduitAdmin(id);
+  if(!p){ alert("Produit non trouvé"); return; }
+
   let panier = JSON.parse(localStorage.getItem('dn_panier')||"[]");
-  
-  // On crée un ID unique par variante (ex: polo-de-marque_M_Blanc)
   let variantId = `${id}_${selectedTaille}_${selectedCouleur.nom}`;
-  
   let ex = panier.find(x=>x.variantId===variantId);
   if(ex) ex.qte++;
   else {
-    panier.push({
-      id: id,
-      variantId: variantId,
-      nom: p.nom,
-      prix: p.nouveau,
-      sku: p.sku,
-      img: p.images[0],
-      image: p.images[0],
-      qte: 1,
-      taille: selectedTaille,
-      couleur: selectedCouleur.nom,
-      couleurCode: selectedCouleur.code
-    });
+    panier.push({ id: id, variantId: variantId, nom: p.nom, prix: p.nouveau, sku: p.sku, img: p.images[0], image: p.images[0], qte: 1, taille: selectedTaille, couleur: selectedCouleur.nom, couleurCode: selectedCouleur.code });
   }
-
   localStorage.setItem('dn_panier', JSON.stringify(panier));
-  localStorage.setItem('panier', JSON.stringify(panier)); // pour compatibilité avec commande.html
-  alert(`${p.nom} - ${selectedCouleur.nom} / ${selectedTaille} ajouté !`);
+  localStorage.setItem('panier', JSON.stringify(panier));
+
+  // --- NOUVEAU : Mise à jour en temps réel, sans recharger ---
+  mettreAJourCompteurPanier();
+  afficherToast(`${p.nom} - ${selectedCouleur.nom} / ${selectedTaille} ajouté au panier ✅`);
 }
 
-function retourAchats(){ window.location.href = 'produits.html'; }
+function mettreAJourCompteurPanier(){
+  const panier = JSON.parse(localStorage.getItem('dn_panier')||"[]");
+  const totalQte = panier.reduce((s,x)=> s + (Number(x.qte) || 0), 0);
+  const totalPrix = panier.reduce((s,x)=> s + (Number(x.qte) || 0) * (Number(x.prix) || Number(x.price) || 0), 0);
+
+  const countEl = document.getElementById('panier-count');
+  const totalEl = document.getElementById('panier-total');
+  if(countEl) countEl.textContent = totalQte;
+  if(totalEl) totalEl.textContent = totalPrix + " $";
+}
+
+function afficherToast(msg){
+  let toast = document.getElementById('dn-toast');
+  if(!toast){
+    toast = document.createElement('div');
+    toast.id = 'dn-toast';
+    toast.style.cssText = "position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:30px;font-size:14px;z-index:9999;box-shadow:0 5px 20px rgba(0,0,0,0.3)";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.display = 'block';
+  setTimeout(()=> toast.style.display='none', 2500);
+}
+
+function retourAchats(){
+  // 1. Si tu viens de produits.html, on fait juste Retour, comme le bouton Retour du navigateur
+  // Ça garde ta place exacte : ta section #tricots, ton filtre ?categorie=femme, et même ton scroll
+  if(document.referrer && document.referrer.includes('produits.html')){
+    window.history.back();
+    return;
+  }
+
+  // 2. Si tu arrives directement sur produit.html (lien partagé, refresh), on te renvoie à sa section
+  const id = getId();
+  const p = PRODUCTS_DB[id] || getProduitAdmin(id);
+  if(p && p.categorie){
+    // Nos polos -> polos, Nos tricots -> tricots...
+    const sectionId = p.categorie.toLowerCase().replace('nos ','').replace(' ','');
+    window.location.href = 'produits.html#' + sectionId;
+    return;
+  }
+
+  window.location.href = 'produits.html';
+}
+document.addEventListener('DOMContentLoaded', mettreAJourCompteurPanier);
 render();
 
 document.querySelector('.avis-mini-link').addEventListener('click', function(){

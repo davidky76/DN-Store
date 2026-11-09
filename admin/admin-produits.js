@@ -1,4 +1,29 @@
-// DN-STORE - ADMIN PRODUITS - communique avec admin.html taille via dn_produits
+ function brancherPhoto(num){
+  const inputFile = document.getElementById(num === 1 ? 'photoInput' : 'photoInput' + num);
+  const inputUrl = document.getElementById(num === 1 ? 'photoUrl' : 'photoUrl' + num);
+  const preview = document.getElementById(num === 1 ? 'previewPhoto' : 'previewPhoto' + num);
+  if(!inputFile) return;
+  inputFile.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => { preview.src = ev.target.result; preview.style.display = 'block'; if(inputUrl) inputUrl.value = ev.target.result; };
+    reader.readAsDataURL(file);
+  });
+  if(inputUrl) inputUrl.addEventListener('input', () => { preview.src = inputUrl.value; preview.style.display = inputUrl.value ? 'block' : 'none'; });
+}
+brancherPhoto(1); brancherPhoto(2); brancherPhoto(3); brancherPhoto(4);
+
+function getPhoto(num){
+  const inputUrl = document.getElementById(num === 1 ? 'photoUrl' : 'photoUrl' + num);
+  return inputUrl ? inputUrl.value.trim() : '';
+}
+
+
+
+
+
+// DN-STORE - ADMIN PRODUITS - communique avec admin.html taille via dn_produits $
 function getProduits(){ return JSON.parse(localStorage.getItem('dn_produits') || '[]'); }
 function saveProduits(l){ localStorage.setItem('dn_produits', JSON.stringify(l)); }
 
@@ -20,6 +45,10 @@ photoInput.addEventListener('change', (e)=>{
 });
 
 
+
+
+
+
 function getCouleursCochees(){
   return [...document.querySelectorAll('input[name="couleur"]:checked')].map(i=>i.value);
 }
@@ -28,23 +57,25 @@ form.addEventListener('submit', (e)=>{
   e.preventDefault();
   const nom = document.getElementById('nom').value.trim();
   const categorie = document.getElementById('categorie').value;
+  const genre = document.getElementById('genre').value;
   if(!categorie){alert("Choisis d'abord la section"); return;}
   const prix = Number(document.getElementById('prix').value);
   const stock = Number(document.getElementById('stock').value);
   const description = document.getElementById('description').value.trim();
   const photoUrl = document.getElementById('photoUrl').value.trim();
-  const photo = photoBase64 || photoUrl || "imgs/default.jpg";
+  const photo = getPhoto(1);
+  const images = [getPhoto(1), getPhoto(2), getPhoto(3), getPhoto(4)].filter(p => p !== '');
 
   if(!nom || !prix || stock < 0){ alert("Remplis nom, prix et stock"); return; }
 
   let produits = getProduits();
   if(idEnCours){
-    produits = produits.map(p => p.id === idEnCours ? {...p, categorie, nom, prix, stock, description, photo, tailles:getTaillesCochees(), couleurs:getCouleursCochees()} : p);
+    produits = produits.map(p => p.id === idEnCours ? {...p, categorie, genre, nom, prix, stock, description, photo, images, tailles:getTaillesCochees(), couleurs:getCouleursCochees()} : p);
     idEnCours = null;
     document.getElementById('titreForm').textContent = "+ Ajouter un produit";
     document.getElementById('btnAnnuler').style.display = 'none';
   } else {
-    produits.push({id: Date.now(), categorie, nom, prix, stock, description, photo, tailles:getTaillesCochees(), couleurs:getCouleursCochees()});
+    produits.push({id: Date.now(), categorie, genre, nom, prix, stock, description, photo, images, tailles:getTaillesCochees(), couleurs:getCouleursCochees()});
   }
   saveProduits(produits);
   form.reset();
@@ -54,6 +85,11 @@ form.addEventListener('submit', (e)=>{
   afficherProduits();
   alert("Produit enregistré ! Va voir ton Dashboard, il a déjà changé.");
 });
+
+
+
+
+
 
 function afficherProduits(){
   const produits = getProduits();
@@ -75,7 +111,7 @@ function afficherProduits(){
     let badge = p.stock===0 ? `<span class="badge badge-rupture">Rupture</span>` : p.stock<=5 ? `<span class="badge badge-critique">Critique : ${p.stock}</span>` : `<span class="badge badge-ok">En stock : ${p.stock}</span>`;
     return `<div class="ligne" style="gap:10px">
       <img src="${p.photo}" style="width:52px;height:52px;object-fit:cover;border-radius:10px" onerror="this.src='https://via.placeholder.com/52'">
-      <div style="flex:1"><span style="font-size:11px;background:#f1f3f6;padding:3px 8px;border-radius:20px>${p.categorie || 'Sans section'}</span><br><b>${p.nom}</b><small>${Number(p.prix).toLocaleString()} $ - Tailles: ${(p.tailles||[]).join(', ') || ' - '} - Couleurs: ${(p.couleurs||[]).join(', ') || ' - '}</small><br><small>${p.description||''}</small></div>
+      <div style="flex:1"><span style="font-size:11px;background:#f1f3f6;padding:3px 8px;border-radius:20px>${p.categorie || 'Sans section'}</span><br><b>${p.nom}</b><small>${Number(p.prix)} $ / ${(Number(p.prix) * 2300).toLocaleString()} $ - Tailles: ${(p.tailles||[]).join(', ') || ' - '} - Couleurs: ${(p.couleurs||[]).join(', ') || ' - '}</small><br><small>${p.description||''}</small></div>
       <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">${badge}
         <div><button onclick="modifierProduit(${p.id})" style="padding:6px 10px;border-radius:8px;border:1px solid #ddd;cursor:pointer">Modifier</button>
         <button onclick="supprimerProduit(${p.id})" style="padding:6px 10px;border-radius:8px;border:none;background:#fee2e2;color:#991b1b;cursor:pointer">Supprimer</button></div>
@@ -83,6 +119,12 @@ function afficherProduits(){
     </div>`;
   }).join('');
 }
+
+
+
+
+
+
 
 function modifierProduit(id){
   const p = getProduits().find(x=>x.id===id);
@@ -101,6 +143,14 @@ function modifierProduit(id){
   document.getElementById('btnAnnuler').style.display = 'block';
   window.scrollTo({top:0, behavior:'smooth'});
 }
+
+
+
+
+
+
+
+
 function supprimerProduit(id){
   if(!confirm("Supprimer ce produit ? Il disparaîtra aussi côté client.")) return;
   saveProduits(getProduits().filter(p=>p.id!==id));
@@ -131,6 +181,12 @@ document.getElementById('filtreSection').addEventListener('change', e=>{
   window.sectionFiltre = sectionChoisie;
   afficherProduits();
 });
+
+
+
+
+
+
 
 // TAILLES PAR SECTION - DN-STORE
 const TAILLES_PAR_SECTION = {
